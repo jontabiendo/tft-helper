@@ -8,8 +8,8 @@ const port = 3001;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var riotRouter = require('./routes/riotApi');
-const { Kayn, REGIONS } = require('kayn');
-const kayn = Kayn(process.env.RIOT_API_KEY);
+// const { Kayn, REGIONS } = require('kayn');
+// const kayn = Kayn(process.env.RIOT_API_KEY);
 var app = express();
 
 // view engine setup

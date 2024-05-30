@@ -1,5 +1,6 @@
 var express = require('express');
-const axios = require('axios')
+const axios = require('axios');
+const { normalizeData } = require('./helpers');
 var router = express.Router();
 
 const axiosAmericas = axios.create({
@@ -49,14 +50,16 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   // console.log("*")
-  const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${puuidResolved}/ids?count=18&api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
+  const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${puuidResolved}/ids?count=10&api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
   .then(async e => {
     const fullInfoList = await Promise.all(
       e.data.map(async match => {
-        console.log("match: ", match)
+        // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
 
-        return res.data
+        relevantInfo = normalizeData(res.data.info.participants, puuidResolved)
+
+        return relevantInfo
     }))
 
     // console.log('fullInfoList: ', fullInfoList)

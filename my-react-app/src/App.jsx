@@ -22,24 +22,24 @@ function App() {
       }
     })
     .then(e => {
-      e.json()
-      console.log(e)
+      return e.json()
     })
     .then(e => {
-      const fields = []
-      console.log("thing2: ", e)
-      for (const key in e) {
-        fields.push([key, e[key]])
-      }
-      setContent(fields)
-      setShowSumm(true)
+      console.log(e)
+      // const fields = []
+      // console.log("thing2: ", e)
+      // for (const key in e) {
+      //   fields.push([key, e[key]])
+      // }
+      // setContent(fields)
+      // setShowSumm(true)
       closeModal()
     });
     // console.log("thing:", await res)
 
     // setSumm(await res)
 
-    console.log(content)
+    // console.log(content)
 
     // setShowSumm(true);
 

@@ -5,7 +5,7 @@ import './App.css'
 import { useModal, Modal } from '../context/modal';
 import OpenModalButton from './components/OpenModalButton';
 import Loading from './components/LoadingModal';
-import { getMatches } from './store/matchesReducer';
+import { getMatches, reverseMatchesAction } from './store/matchesReducer';
 import { getMatchesAction } from './store/matchesReducer';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
     
     const res = await dispatch(getMatches(search))
     .then(e => {
-      console.log("e: ", e)
+      console.log("e: ", e.payload)
       dispatch(getMatchesAction(e.payload))
       closeModal()
     });
@@ -40,6 +40,12 @@ function App() {
     return null
   }
 
+  function reverseMatches() {
+    dispatch(reverseMatchesAction(matches))
+  }
+
+  // console.log(matches)
+
   return (
     <>
       <h1>TFT Helper</h1>
@@ -48,15 +54,11 @@ function App() {
 
       <OpenModalButton modalComponent={Loading} buttonText="Find Summoner" onButtonClick={findSummoner}/>
 
-      {/* {showSumm ? (
+      {matches.length > 0 ? (
         <>
-          {content.map(pair => {
-            return (
-            <p key={pair[0]}>{pair[0]}: {pair[1]}</p>
-          )
-          })}
+          <button onClick={reverseMatches}>Reverse Matches</button>
         </>
-      ) : null} */}
+      ) : null}
     </>
   )
 }

@@ -17,19 +17,20 @@ const REVERSE_MATCHES = 'REVERSE_MATCHES';
 //   }
 // };
 
-const initialState = {
-  matches: []
-};
 
 export const matchesSlice = createSlice({
   name: "matches",
-  initialState,
+  initialState: {
+    matches: []
+  },
   reducers: {
     getMatchesAction(state, action) {
+      console.log("state: ", state)
+      console.log("action ", action.payload)
       state.matches = action.payload
     },
     reverseMatchesAction(state, action) {
-      state.matches = action.payload
+      state = action.payload
     }
   }
 })

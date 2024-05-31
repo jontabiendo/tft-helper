@@ -1,20 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { ModalProvider, Modal } from '../context/modal.jsx'
 import {Provider } from 'react-redux'
-// import BrowserRouter from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx'
+
+import './index.css'
+
+import { ModalProvider, Modal } from '../context/modal.jsx'
+import { store } from './store'
+
+if (process.env.NODE_ENV !== 'production') {
+	window.store = store;
+};
 
 function Root() {
   return (
 		<ModalProvider>
-			{/* <Provider> */}
-				{/* <BrowserRouter> */}
+			<Provider store={store}>
+				<BrowserRouter>
 					<App />
 					<Modal />
-				{/* </BrowserRouter> */}
-			{/* </Provider> */}
+				</BrowserRouter>
+			</Provider>
 		</ModalProvider>
 	);
 }

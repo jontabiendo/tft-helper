@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { reverse } from './store/matchesReducer';
 import './App.css'
 import { useModal, Modal } from '../context/modal';
 import OpenModalButton from './components/OpenModalButton';
@@ -6,16 +8,19 @@ import Loading from './components/LoadingModal';
 
 function App() {
   const [search, setSearch] = useState("");
-  const [showSumm, setShowSumm] = useState(false);
-  const [summ, setSumm] = useState(null);
-  const [loading, setLoading] = useState(false)
-  const [content, setContent] = useState([]);
+  const matches = useSelector((state) => state.counter.matches)
+  // const [showSumm, setShowSumm] = useState(false);
+  // const [summ, setSumm] = useState(null);
+  // const [loading, setLoading] = useState(false)
+  // const [content, setContent] = useState([]);
   const {closeModal, modalRef, modalContent} = useModal();
+
+  const dispatch = useDispatch();
 
   async function findSummoner() {
     console.log(search)
     
-    const res = await fetch(`http://localhost:3000/riot/${search}`, {
+    const res = await fetch(`/riot/${search}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'

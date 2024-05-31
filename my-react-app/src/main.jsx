@@ -7,7 +7,9 @@ import App from './App.jsx'
 import './index.css'
 
 import { ModalProvider, Modal } from '../context/modal.jsx'
-import { store } from './store'
+import configureAppStore from './store'
+
+let store = configureAppStore();
 
 if (process.env.NODE_ENV !== 'production') {
 	window.store = store;

@@ -10,9 +10,5 @@ export default function configureAppStore(preloadedState) {
     reducer: rootReducer
   });
 
-  if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer));
-  };
-
   return store;
 };

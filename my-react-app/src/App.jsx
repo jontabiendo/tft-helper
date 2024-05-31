@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { reverse } from './store/matchesReducer';
+// import { reverse } from './store/matchesReducer';
 import './App.css'
 import { useModal, Modal } from '../context/modal';
 import OpenModalButton from './components/OpenModalButton';
 import Loading from './components/LoadingModal';
+import { getMatches } from './store/matchesReducer';
+import { getMatchesAction } from './store/matchesReducer';
 
 function App() {
   const [search, setSearch] = useState("");
-  const matches = useSelector((state) => state.counter.matches)
+  const matches = useSelector((state) => state.matches)
   // const [showSumm, setShowSumm] = useState(false);
   // const [summ, setSumm] = useState(null);
   // const [loading, setLoading] = useState(false)
@@ -20,27 +22,14 @@ function App() {
   async function findSummoner() {
     console.log(search)
     
-    const res = await fetch(`/riot/${search}`, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const res = await dispatch(getMatches(search))
     .then(e => {
-      return e.json()
-    })
-    .then(e => {
-      console.log(e)
-      // const fields = []
-      // console.log("thing2: ", e)
-      // for (const key in e) {
-      //   fields.push([key, e[key]])
-      // }
-      // setContent(fields)
-      // setShowSumm(true)
+      console.log("e: ", e)
+      dispatch(getMatchesAction(e.payload))
       closeModal()
     });
-    // console.log("thing:", await res)
+    console.log("res: ", res)
+    // console.log("thing:", matchesSlice.actions.getMatchesAction(res))
 
     // setSumm(await res)
 

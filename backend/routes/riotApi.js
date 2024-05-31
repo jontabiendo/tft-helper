@@ -15,13 +15,13 @@ const axiosNA1 = axios.create({
 
 router.get('/:summoner', async function(req, res, next) {
   const start = Date.now();
-  // console.log("*")
-  // console.log("*")
-  // console.log("*")
-  // console.log("fetcing puuid")
-  // console.log("*")
-  // console.log("*")
-  // console.log("*")
+  console.log("*")
+  console.log("*")
+  console.log("*")
+  console.log("fetcing puuid: ", req.params.summoner)
+  console.log("*")
+  console.log("*")
+  console.log("*")
   const puuid = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${req.params.summoner}/NA1?api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
 
   // console.log("*")
@@ -63,7 +63,6 @@ router.get('/:summoner', async function(req, res, next) {
     }))
 
     // console.log('fullInfoList: ', fullInfoList)
-
     return fullInfoList
   })
 
@@ -74,6 +73,7 @@ router.get('/:summoner', async function(req, res, next) {
     matches: matches
   }
   console.log("Total time: ", (Date.now() - start)/1000)
+  console.log(data)
   res.status(200).send(data)
 })
 

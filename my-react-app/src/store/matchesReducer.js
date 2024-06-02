@@ -30,11 +30,10 @@ export const matchesSlice = createSlice({
       state.matches = action.payload
     },
     reverseMatchesAction(state, action) {
-      state = action.payload
+      state.matches = state.matches.reverse()
     }
   }
 })
-
 
 async function fetchMatches(name) {
   console.log("fetching...")

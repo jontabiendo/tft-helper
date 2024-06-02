@@ -22,7 +22,7 @@ router.get('/:summoner', async function(req, res, next) {
   console.log("*")
   console.log("*")
   console.log("*")
-  const puuid = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${req.params.summoner}/NA1?api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
+  const puuid = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${req.params.summoner}/NA1?api_key=RGAPI-c6af43e3-1c68-486e-a552-85f7226571a4`)
 
   // console.log("*")
   // console.log("*")
@@ -42,7 +42,7 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   
-  const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${puuidResolved}?api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`);
+  const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${puuidResolved}?api_key=RGAPI-c6af43e3-1c68-486e-a552-85f7226571a4`);
   // console.log("*")
   // console.log("*")
   // console.log("*")
@@ -50,12 +50,13 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   // console.log("*")
-  const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${puuidResolved}/ids?count=10&api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
+  const count = 10
+  const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${puuidResolved}/ids?count=${count}&api_key=RGAPI-c6af43e3-1c68-486e-a552-85f7226571a4`)
   .then(async e => {
     const fullInfoList = await Promise.all(
       e.data.map(async match => {
         // console.log("match: ", match)
-        const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=RGAPI-b16508b0-f685-4316-8457-0deb556b9d42`)
+        const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=RGAPI-c6af43e3-1c68-486e-a552-85f7226571a4`)
 
         relevantInfo = normalizeData(res.data.info.participants, puuidResolved)
 

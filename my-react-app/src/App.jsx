@@ -5,8 +5,7 @@ import './App.css'
 import { useModal, Modal } from '../context/modal';
 import OpenModalButton from './components/OpenModalButton';
 import Loading from './components/LoadingModal';
-import { getMatches, reverseMatchesAction } from './store/matchesReducer';
-import { getMatchesAction } from './store/matchesReducer';
+import { getMatches, reverseMatchesAction, getMatchesAction } from './store/matchesReducer';
 
 function App() {
   const [search, setSearch] = useState("");
@@ -40,9 +39,9 @@ function App() {
     return null
   }
 
-  function reverseMatches() {
-    dispatch(reverseMatchesAction(matches))
-  }
+  // function reverseMatches() {
+  //   dispatch(reverseMatchesAction(matches))
+  // }
 
   // console.log(matches)
 
@@ -53,6 +52,12 @@ function App() {
       <input type='text' id='search' name='search' required maxLength={24} value={search} onChange={(e) => setSearch(e.target.value)}/>
 
       <OpenModalButton modalComponent={Loading} buttonText="Find Summoner" onButtonClick={findSummoner}/>
+
+      <OpenModalButton modalComponent={Loading} buttonText="Reverse Matches" onButtonClick={
+        () => {
+          dispatch(reverseMatchesAction())
+          closeModal()
+        }}/>
 
       {matches.length > 0 ? (
         <>

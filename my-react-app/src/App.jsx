@@ -6,6 +6,7 @@ import { useModal, Modal } from '../context/modal';
 import OpenModalButton from './components/OpenModalButton';
 import Loading from './components/LoadingModal';
 import { getMatches, reverseMatchesAction, getMatchesAction } from './store/matchesReducer';
+import { setSummoner } from './store/summonerReducer';
 
 function App() {
   const [search, setSearch] = useState("");
@@ -24,7 +25,9 @@ function App() {
     const res = await dispatch(getMatches(search))
     .then(e => {
       console.log("e: ", e.payload)
-      dispatch(getMatchesAction(e.payload))
+      dispatch(getMatchesAction(e.payload.matches))
+      e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate)
+      dispatch(setSummoner(e.payload.summoner))
       closeModal()
     });
     console.log("res: ", res)

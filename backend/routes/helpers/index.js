@@ -33,6 +33,28 @@ function normalizeMatchData(match, id){
   return relevantInfo
 }
 
+function normalizeRankedData(rankings) {
+  const res = {};
+
+  for (const queue of rankings) {
+    // console.log(queue)
+    if (queue.rank) {
+      queue.rank = queue.tier + " " + queue.rank
+    }
+    
+    res[queue.queueType] = queue
+
+    delete queue.tier
+    delete queue.queueType
+    delete queue.puuid
+    delete queue.leagueId
+    delete queue.summonerId
+  }
+
+  return res
+}
+
 module.exports = {
-  normalizeMatchData
+  normalizeMatchData,
+  normalizeRankedData
 }

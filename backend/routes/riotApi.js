@@ -1,6 +1,6 @@
 var express = require('express');
 const axios = require('axios');
-const { normalizeMatchData } = require('./helpers');
+const { normalizeMatchData, normalizeRankedData } = require('./helpers');
 var router = express.Router();
 
 const axiosAmericas = axios.create({
@@ -52,6 +52,8 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
 
   const rankedInfo = await axiosNA1.get(`/league/v1/entries/by-summoner/${summonerInfo.data.id}?api_key=${process.env.RIOT_API_KEY}`)
+
+  summonerInfo.data.rankings = normalizeRankedData(rankedInfo.data)
 
   // console.log("*")
   // console.log("*")

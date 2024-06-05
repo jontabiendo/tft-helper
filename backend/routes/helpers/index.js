@@ -1,4 +1,4 @@
-function normalizeData(match, id){
+function normalizeMatchData(match, id){
   let relevantInfo = match.filter(player => player.puuid === id)[0]
 
   delete relevantInfo.companion
@@ -34,5 +34,5 @@ function normalizeData(match, id){
 }
 
 module.exports = {
-  normalizeData
+  normalizeMatchData
 }

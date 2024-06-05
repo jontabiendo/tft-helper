@@ -1,3 +1,6 @@
+var dotenv = require('dotenv')
+dotenv.config()
+// console.log(process.env.RIOT_API_KEY)
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,8 +11,6 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var riotRouter = require('./routes/riotApi');
-// const { Kayn, REGIONS } = require('kayn');
-// const kayn = Kayn(process.env.RIOT_API_KEY);
 var app = express();
 
 app.enable('trust proxy')

@@ -42,7 +42,10 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   
-  const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${summonerResolved.puuid}?api_key=${process.env.RIOT_API_KEY}`);
+  const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${summonerResolved.puuid}?api_key=${process.env.RIOT_API_KEY}`).then((e) => {
+    return e.data
+  }
+  );
   // console.log("*")
   // console.log("*")
   // console.log("*")
@@ -51,9 +54,9 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
 
-  const rankedInfo = await axiosNA1.get(`/league/v1/entries/by-summoner/${summonerInfo.data.id}?api_key=${process.env.RIOT_API_KEY}`)
+  // const rankedInfo = await axiosNA1.get(`/league/v1/entries/by-summoner/${summonerInfo.data.id}?api_key=${process.env.RIOT_API_KEY}`)
 
-  summonerInfo.data.rankings = normalizeRankedData(rankedInfo.data)
+  // summonerInfo.data.rankings = normalizeRankedData(rankedInfo.data)
 
   // console.log("*")
   // console.log("*")
@@ -67,26 +70,35 @@ router.get('/:summoner', async function(req, res, next) {
   const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${summonerResolved.puuid}/ids?count=${count}&api_key=${process.env.RIOT_API_KEY}`)
   .then(async e => {
     const fullInfoList = await Promise.all(
-      e.data.map(async match => {
+      [...e.data.map(async match => {
         // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
 
         relevantInfo = normalizeMatchData(res.data.info.participants, summonerResolved.puuid)
 
         return relevantInfo
-    }))
+    }), (async () => {
+      const rankedInfo = await axiosNA1.get(`/league/v1/entries/by-summoner/${summonerInfo.id}?api_key=${process.env.RIOT_API_KEY}`)
+
+      // console.log(summonerInfo)
+      summonerInfo.rankings = normalizeRankedData(rankedInfo.data)
+
+      return summonerInfo.rankings
+    })()
+  ])
 
     // console.log('fullInfoList: ', fullInfoList)
+    // fullInfoList.pop()
     return fullInfoList
   })
 
   // console.log(data)
   const data = {
     time: (Date.now() - start)/1000 + " seconds",
-    summoner: summonerInfo.data,
+    summoner: summonerInfo,
     matches: matches
   }
-  console.log("Total time: ", (Date.now() - start)/1000)
+  console.log("Total time: ", data.time)
   // console.log(data)
   res.status(200).send(data)
 })

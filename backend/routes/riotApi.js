@@ -43,6 +43,7 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   
   const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${summonerResolved.puuid}?api_key=${process.env.RIOT_API_KEY}`).then((e) => {
+    // console.log(typeof e.data.revisionDate)
     return e.data
   }
   );
@@ -92,7 +93,7 @@ router.get('/:summoner', async function(req, res, next) {
     return fullInfoList
   })
 
-  // console.log(data)
+  console.log(summonerInfo)
   const data = {
     time: (Date.now() - start)/1000 + " seconds",
     summoner: summonerInfo,

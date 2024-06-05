@@ -26,7 +26,7 @@ function App() {
     .then(e => {
       console.log("e: ", e.payload)
       dispatch(getMatchesAction(e.payload.matches))
-      e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate)
+      e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
       dispatch(setSummoner(e.payload.summoner))
       closeModal()
     });

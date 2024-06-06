@@ -1,17 +1,31 @@
-var dotenv = require('dotenv')
+const dotenv = require('dotenv')
 dotenv.config()
 // console.log(process.env.RIOT_API_KEY)
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var riotRouter = require('./routes/riotApi');
-var app = express();
+// const { Sequelize } = require('sequelize');
+
+// const sequelize = new Sequelize('postgres://localhost:5432/tft_helper');
+
+// (async () => {
+//   try {
+//     await sequelize.authenticate();
+//     console.log('Connection has been established successfully.');
+//   } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+//   }
+
+// })()
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const riotRouter = require('./routes/riotApi');
+const app = express();
 
 app.enable('trust proxy')
 

@@ -1,7 +1,7 @@
-var express = require('express');
+const express = require('express');
 const axios = require('axios');
 const { normalizeMatchData, normalizeRankedData } = require('./helpers');
-var router = express.Router();
+const router = express.Router();
 
 const axiosAmericas = axios.create({
   baseURL: "https://americas.api.riotgames.com",

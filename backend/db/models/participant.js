@@ -13,8 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  participant.init({
-    id: DataTypes.INTEGER,
+  Participant.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     goldLeft: DataTypes.INTEGER,
     lastRound: DataTypes.INTEGER,
     level: DataTypes.INTEGER,

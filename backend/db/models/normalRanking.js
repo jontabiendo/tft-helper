@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   NormalRanking.init({
-    id: DataTypes.STRING,
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     rank: DataTypes.STRING,
     leaguePoints: DataTypes.INTEGER,
     wins: DataTypes.INTEGER,

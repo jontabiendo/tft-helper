@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   DoubleUpRanking.init({
-    id: DataTypes.STRING,
+    id: {
+      type: DataTypes.STRING, 
+      primaryKey: true
+    },
     rank: DataTypes.STRING,
     leaguePoints: DataTypes.INTEGER,
     wins: DataTypes.INTEGER,

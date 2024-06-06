@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   HyperRollRanking.init({
-    id: DataTypes.STRING,
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     ratedRating: DataTypes.INTEGER,
     wins: DataTypes.INTEGER,
     losses: DataTypes.INTEGER

@@ -1,4 +1,6 @@
 'use strict';
+const { NormalRanking, DoubleUpRanking, HyperRollRanking } = require('./index');
+console.log(NormalRanking, DoubleUpRanking, HyperRollRanking)
 const {
   Model
 } = require('sequelize');
@@ -11,11 +13,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Summoner.hasOne(NormalRanking)
     }
   }
   Summoner.init({
-    id: DataTypes.STRING,
-    revisionDate: DataTypes.DATE,
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     level: DataTypes.INTEGER
   }, {
     sequelize,

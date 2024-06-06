@@ -12,9 +12,6 @@ module.exports = {
       id: {
         type: Sequelize.STRING
       },
-      revisionDate: {
-        type: Sequelize.DATE
-      },
       level: {
         type: Sequelize.INTEGER
       },

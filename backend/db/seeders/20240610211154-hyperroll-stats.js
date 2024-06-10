@@ -12,13 +12,16 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   return queryInterface.bulkInsert("Summoners", [
-    {
-      id: "WaterS0lid",
-      level: 524,
-      updatedAt: new Date("Thu Jun 06 2024")
-    }
-   ])
+    return queryInterface.bulkInsert('HyperRollRankings', [
+      {
+        id: 'WaterS0lid',
+        ratedTier: 'ORANGE',
+        ratedRating: 5220,
+        wins: 189,
+        losses: 138
+      }
+     ])
+    
   },
 
   async down (queryInterface, Sequelize) {
@@ -28,6 +31,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete("Summoners", null, {})
+    return queryInterface.bulkDelete("HyperRollRankings", null, {})
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 const { NormalRanking, DoubleUpRanking, HyperRollRanking } = require('./index');
-console.log(NormalRanking, DoubleUpRanking, HyperRollRanking)
+// console.log(NormalRanking, DoubleUpRanking, HyperRollRanking)
 const {
   Model
 } = require('sequelize');

@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true
     },
+    ratiedTier: DataTypes.STRING,
     ratedRating: DataTypes.INTEGER,
     wins: DataTypes.INTEGER,
     losses: DataTypes.INTEGER

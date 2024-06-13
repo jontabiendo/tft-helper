@@ -23,7 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     level: DataTypes.INTEGER,
     placement: DataTypes.INTEGER,
     playersEliminated: DataTypes.INTEGER,
-    totalDamageToPlayers: DataTypes.INTEGER
+    totalDamageToPlayers: DataTypes.INTEGER,
+    summonerId: DataTypes.STRING,
+    augments: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'participant',

@@ -67,13 +67,14 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
 
-  const count = 10
+  const count = 18
   const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${summonerResolved.puuid}/ids?count=${count}&api_key=${process.env.RIOT_API_KEY}`)
   .then(async e => {
     const fullInfoList = await Promise.all(
       [...e.data.map(async match => {
         // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
+        console.log(res.data)
 
         relevantInfo = normalizeMatchData(res.data.info.participants, summonerResolved.puuid)
 
@@ -88,12 +89,12 @@ router.get('/:summoner', async function(req, res, next) {
     })()
   ])
 
-    // console.log('fullInfoList: ', fullInfoList)
-    fullInfoList.pop()
+  fullInfoList.pop()
+  // console.log('fullInfoList: ', fullInfoList)
     return fullInfoList
   })
 
-  console.log(summonerInfo)
+  // console.log(summonerInfo)
   const data = {
     time: (Date.now() - start)/1000 + " seconds",
     summoner: summonerInfo,

@@ -1,10 +1,9 @@
 'use strict';
-// console.log(NormalRanking, DoubleUpRanking, HyperRollRanking)
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Summoner extends Model {
+  class Match extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,18 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Summoner.hasOne(NormalRanking)
     }
   }
-  Summoner.init({
+  Match.init({
     id: {
       type: DataTypes.STRING,
-      primaryKey: true
+      primaryKey: true,
+      unique: true
     },
-    level: DataTypes.INTEGER
+    tft_set: DataTypes.INTEGER,
+    game_type: DataTypes.STRING,
+    queue_id: DataTypes.INTEGER,
+    set_core_name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Summoner',
+    modelName: 'Match',
   });
-  return Summoner;
+  return Match;
 };

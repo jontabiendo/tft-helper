@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Summoner.hasOne(NormalRanking)
+      Summoner.hasOne(models.Ranking, {
+        foreignKey: 'summonerId'
+      })
     }
   }
   Summoner.init({

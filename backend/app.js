@@ -16,6 +16,7 @@ const isProduction = environment === 'production';
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const riotRouter = require('./routes/riotApi');
+// const eagerRankings = require('./routes/test')
 const app = express();
 
 app.enable('trust proxy')
@@ -54,6 +55,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/riot', riotRouter);
+
+const { Op } = require('sequelize');
+const { Summoner, NormalRanking, Ranking } = require('./db/models')
+
+async function eagerRankings() {
+  const summoner = await Summoner.findOne({
+    where: {
+      id: 'WaterS0lid'
+    },
+    attributes: ['id', 'updatedAt', 'level'],
+    include: { 
+      model: Ranking,
+      attributes: ['summonerId', 'doubleUpRanking', 'normalRanking', 'hyperRollRanking']
+    }
+  })
+  console.log(await summoner.Ranking)
+  return await summoner
+}
+console.log(eagerRankings())
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

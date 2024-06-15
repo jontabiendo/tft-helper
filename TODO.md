@@ -1,0 +1,1 @@
+Redo tables to have proper associations

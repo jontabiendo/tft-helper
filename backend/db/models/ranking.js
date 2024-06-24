@@ -15,6 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       Ranking.belongsTo(models.Summoner, {
         foreignKey: 'rankings'
       })
+      Ranking.hasOne(models.NormalRanking, {
+        foreignKey: 'id'
+      })
+      Ranking.hasOne(models.HyperRollRanking, {
+        foreignKey: 'id'
+      })
+      Ranking.hasOne(models.DoubleUpRanking, {
+        foreignKey: 'id'
+      })
     }
   }
   Ranking.init({

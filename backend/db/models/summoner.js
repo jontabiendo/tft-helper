@@ -15,6 +15,18 @@ module.exports = (sequelize, DataTypes) => {
       Summoner.hasOne(models.Ranking, {
         foreignKey: 'summonerId'
       })
+      // Summoner.hasOne(models.HyperRollRanking, {
+      //   through: "Ranking",
+      //   foreignKey: 'id'
+      // })
+      // Summoner.hasOne(models.DoubleUpRanking, {
+      //   through: "Ranking",
+      //   foreignKey: 'id'
+      // })
+      // Summoner.hasOne(models.NormalRanking, {
+      //   through: "Ranking",
+      //   foreignKey: 'id'
+      // })
     }
   }
   Summoner.init({

@@ -57,7 +57,7 @@ app.use('/users', usersRouter);
 app.use('/riot', riotRouter);
 
 const { Op } = require('sequelize');
-const { Summoner, NormalRanking, Ranking } = require('./db/models')
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking } = require('./db/models')
 
 async function eagerRankings() {
   const summoner = await Summoner.findOne({
@@ -65,12 +65,32 @@ async function eagerRankings() {
       id: 'WaterS0lid'
     },
     attributes: ['id', 'updatedAt', 'level'],
+    // include: [
+    //   NormalRanking,
+    //   HyperRollRanking,
+    //   DoubleUpRanking
+    // ]
     include: { 
       model: Ranking,
-      attributes: ['summonerId', 'doubleUpRanking', 'normalRanking', 'hyperRollRanking']
+      // as: "Rankings",
+      attributes: ['summonerId', 'doubleUpRanking', 'normalRanking', 'hyperRollRanking'],
+      include: [
+        {
+          model: NormalRanking,
+          attributes: ['rank', 'leaguePoints', 'wins', 'losses', 'veteran', 'inactive', 'hotStreak', 'freshBlood']
+        },
+        {
+          model: DoubleUpRanking,
+          attributes: ['rank', 'leaguePoints', 'wins', 'losses', 'veteran', 'inactive', 'hotStreak', 'freshBlood']
+        },
+        {
+          model: HyperRollRanking,
+          attributes: ['ratedTier', 'ratedRating', 'wins', 'losses']
+        }
+      ]
     }
   })
-  console.log(await summoner.Ranking)
+  console.log("thing: ", await summoner.Ranking)
   return await summoner
 }
 console.log(eagerRankings())

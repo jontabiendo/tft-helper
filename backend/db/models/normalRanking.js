@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // NormalRanking.belongsTo(models.Summoner, {
+      //   through: 'Ranking'
+      // })
+      NormalRanking.belongsTo(models.Ranking, {
+        foreignKey: 'normalRanking'
+      })
     }
   }
   NormalRanking.init({
@@ -27,8 +33,21 @@ module.exports = (sequelize, DataTypes) => {
     freshBlood: DataTypes.BOOLEAN,
     hotStreak: DataTypes.BOOLEAN
   }, {
+    defaultScope: {
+      attributes: [
+        'rank',
+        'leaguePoints',
+        'wins',
+        'losses',
+        'veteran',
+        'inactive',
+        'freshBlood',
+        'hotStreak'
+      ]
+    },
     sequelize,
     modelName: 'NormalRanking',
   });
   return NormalRanking;
 };
+

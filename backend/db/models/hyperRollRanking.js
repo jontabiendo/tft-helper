@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // HyperRollRanking.belongsTo(models.Summoner, {
+      //   through: 'Ranking'
+      // })
     }
   }
   HyperRollRanking.init({
@@ -18,11 +21,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true
     },
-    ratiedTier: DataTypes.STRING,
+    ratedTier: DataTypes.STRING,
     ratedRating: DataTypes.INTEGER,
     wins: DataTypes.INTEGER,
     losses: DataTypes.INTEGER
   }, {
+    defaultScope: {
+      attributes: [
+        'ratedTier',
+        'ratedRating',
+        'wins',
+        'losses'
+      ]
+    },
     sequelize,
     modelName: 'HyperRollRanking',
   });

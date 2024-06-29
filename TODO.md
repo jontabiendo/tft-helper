@@ -8,6 +8,8 @@ Redo fetch to retrieve data for each participant in the background(after returni
 
 Redo fetch to check database first
 
+Test faster implementation of promise.all
+
 Redo return of fetch to also calculate top trending data
 
 Start working on frontend

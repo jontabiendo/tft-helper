@@ -44,7 +44,6 @@ async function fetchMatches(name) {
     }
   })
   const thing = await res.json()
-  // console.log("res: ", thing.matches)
   return thing
 }
 
@@ -52,9 +51,6 @@ export const getMatches = createAsyncThunk(
   GET_MATCHES,
   async (name, thunkApi) => {
     const res = await fetchMatches(name)
-    
-    // dispatch(get(res))
-    // console.log("res: ", res)
     return res
   }
 )

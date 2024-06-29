@@ -16,21 +16,22 @@ function App() {
   // const [loading, setLoading] = useState(false)
   // const [content, setContent] = useState([]);
   const {closeModal, modalRef, modalContent} = useModal();
+  // debugger
 
   const dispatch = useDispatch();
 
   async function findSummoner() {
-    console.log(search)
+    // console.log(search)
     
     const res = await dispatch(getMatches(search))
     .then(e => {
-      console.log("e: ", e.payload)
+      // console.log("e: ", e.payload)
       dispatch(getMatchesAction(e.payload.matches))
       e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
       dispatch(setSummoner(e.payload.summoner))
       closeModal()
     });
-    console.log("res: ", res)
+    // console.log("res: ", res)
     // console.log("thing:", matchesSlice.actions.getMatchesAction(res))
 
     // setSumm(await res)

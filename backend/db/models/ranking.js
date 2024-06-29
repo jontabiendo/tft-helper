@@ -61,6 +61,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+    defaultScope: {
+      attributes: [
+        'summonerId'
+      ]
+    },
     sequelize,
     modelName: 'Ranking',
   });

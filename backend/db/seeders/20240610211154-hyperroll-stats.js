@@ -19,6 +19,13 @@ module.exports = {
         ratedRating: 5220,
         wins: 189,
         losses: 138
+      },
+      {
+        id: 'Poopy',
+        ratedTier: 'FAKE',
+        ratedRating: 5220,
+        wins: 189,
+        losses: 138
       }
      ])
     

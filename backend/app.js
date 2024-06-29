@@ -72,25 +72,20 @@ async function eagerRankings() {
     // ]
     include: { 
       model: Ranking,
-      // as: "Rankings",
-      attributes: ['summonerId', 'doubleUpRanking', 'normalRanking', 'hyperRollRanking'],
       include: [
         {
           model: NormalRanking,
-          attributes: ['rank', 'leaguePoints', 'wins', 'losses', 'veteran', 'inactive', 'hotStreak', 'freshBlood']
         },
         {
           model: DoubleUpRanking,
-          attributes: ['rank', 'leaguePoints', 'wins', 'losses', 'veteran', 'inactive', 'hotStreak', 'freshBlood']
         },
         {
           model: HyperRollRanking,
-          attributes: ['ratedTier', 'ratedRating', 'wins', 'losses']
         }
       ]
     }
   })
-  console.log("thing: ", await summoner.Ranking)
+  console.log("thing: ", await summoner.toJSON())
   return await summoner
 }
 console.log(eagerRankings())

@@ -23,6 +23,17 @@ module.exports = {
       inactive: false,
       freshBlood: false,
       hotStreak: false
+    },
+    {
+      id: "Poopy",
+      rank: 'FAKE I',
+      leaguePoints: 75,
+      wins: 37,
+      losses: 40,
+      veteran: false,
+      inactive: false,
+      freshBlood: false,
+      hotStreak: false
     }
    ])
   },

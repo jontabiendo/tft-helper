@@ -67,7 +67,7 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
 
-  const count = 18
+  const count = 5
   const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${summonerResolved.puuid}/ids?count=${count}&api_key=${process.env.RIOT_API_KEY}`)
   .then(async e => {
     const fullInfoList = await Promise.all(
@@ -103,6 +103,8 @@ router.get('/:summoner', async function(req, res, next) {
   console.log("Total time: ", data.time)
   // console.log(data)
   res.status(200).send(data)
+
+  setTimeout(() => console.log('we are here'), 2000)
 })
 
 module.exports = router;

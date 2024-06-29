@@ -11,12 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // NormalRanking.belongsTo(models.Summoner, {
-      //   through: 'Ranking'
-      // })
-      NormalRanking.belongsTo(models.Ranking, {
-        foreignKey: 'normalRanking'
-      })
     }
   }
   NormalRanking.init({

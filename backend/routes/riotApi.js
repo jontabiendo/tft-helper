@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const { normalizeMatchData, normalizeRankedData } = require('./helpers');
+const { normalizeMatchDataById, normalizeRankedData, normalizeDatabaseMatchData } = require('./helpers');
 const router = express.Router();
 
 const axiosAmericas = axios.create({
@@ -74,9 +74,9 @@ router.get('/:summoner', async function(req, res, next) {
       [...e.data.map(async (match, idx) => {
         // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
-        console.log("summoner: ", res.data.info.participants)
+        // console.log("summoner: ", res.data.info)
 
-        relevantInfo = normalizeMatchData(res.data.info.participants, summonerResolved.puuid)
+        relevantInfo = normalizeMatchDataById(res.data.info.participants, summonerResolved.puuid)
 
         rawMatchList[idx] = (res.data)
 
@@ -110,7 +110,7 @@ router.get('/:summoner', async function(req, res, next) {
 
   // setTimeout(() => console.log('we are here'), 2000)
 
-
+  normalizeDatabaseMatchData(rawMatchList.pop())
 })
 
 module.exports = router;

@@ -1,6 +1,6 @@
 Redo tables to have proper associations
 
-Refactor fetch to do backend stuff after using res.send to send normalized data
+Refactor fetch to do backend stuff after using res.send to send normalized data - started
 
 Redo fetch to store new data in the db and updated revisionDate for each player
 

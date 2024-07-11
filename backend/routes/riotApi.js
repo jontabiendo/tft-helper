@@ -66,17 +66,19 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   // console.log("*")
-
-  const count = 5
+  const count = 5;
+  const rawMatchList = Array(count);
   const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${summonerResolved.puuid}/ids?count=${count}&api_key=${process.env.RIOT_API_KEY}`)
   .then(async e => {
     const fullInfoList = await Promise.all(
-      [...e.data.map(async match => {
+      [...e.data.map(async (match, idx) => {
         // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
-        console.log(res.data)
+        console.log("summoner: ", res.data.info.participants)
 
         relevantInfo = normalizeMatchData(res.data.info.participants, summonerResolved.puuid)
+
+        rawMatchList[idx] = (res.data)
 
         return relevantInfo
     }), (async () => {
@@ -88,6 +90,8 @@ router.get('/:summoner', async function(req, res, next) {
       return summonerInfo.rankings
     })()
   ])
+
+  // console.log("rawMatchList: ", rawMatchList)
 
   fullInfoList.pop()
   // console.log('fullInfoList: ', fullInfoList)
@@ -104,7 +108,9 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log(data)
   res.status(200).send(data)
 
-  setTimeout(() => console.log('we are here'), 2000)
+  // setTimeout(() => console.log('we are here'), 2000)
+
+
 })
 
 module.exports = router;

@@ -54,7 +54,12 @@ function normalizeRankedData(rankings) {
   return res
 }
 
+function normalizeDatabaseMatchData(matchData) {
+  
+}
+
 module.exports = {
   normalizeMatchData,
-  normalizeRankedData
+  normalizeRankedData,
+  normalizeDatabaseMatchData
 }

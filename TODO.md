@@ -17,4 +17,4 @@ Redo return of fetch to also calculate top trending data
 
 Start working on frontend
 
-This is a commit 2
+This is a commit 3

@@ -34,7 +34,8 @@ function LandingPage() {
         e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
         dispatch(setSummoner(e.payload.summoner))
         closeModal()
-        
+
+        navigate('/summoner')
       });
     } catch (e) {
       setShowError(true)

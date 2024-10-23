@@ -62,7 +62,7 @@ router.get('/:summoner', async function(req, res, next) {
   // console.log("*")
   // console.log("*")
   // console.log("*")
-  // console.log("ranked info received: ", rankedInfo.data)
+  // console.log("ranked info received: ", summonerInfo)
   // console.log("*")
   // console.log("*")
   // console.log("*")
@@ -75,9 +75,10 @@ router.get('/:summoner', async function(req, res, next) {
         // console.log("match: ", match)
         const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
         // console.log("summoner: ", res.data.info)
-
-        relevantInfo = normalizeMatchDataById(res.data.info.participants, summonerResolved.puuid)
-
+        
+        relevantInfo = normalizeMatchDataById(res.data.info.participants, summonerResolved.puuid, res.data.info.queueId)
+        idx === 0 ? console.log(relevantInfo) : null
+        
         rawMatchList[idx] = (res.data)
 
         return relevantInfo

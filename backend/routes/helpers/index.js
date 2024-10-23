@@ -1,4 +1,5 @@
-function normalizeMatchDataById(match, id){
+function normalizeMatchDataById(match, id, queueId){
+  // console.log(match)
   relevantInfo = match.filter(player => player.puuid === id)[0]
 
   delete relevantInfo.companion
@@ -29,6 +30,8 @@ function normalizeMatchDataById(match, id){
       return 0
     }
   })
+
+  relevantInfo['queueId'] = queueId
   
   return relevantInfo
 }
@@ -108,7 +111,7 @@ async function normalizeDatabaseMatchData(matchData) {
 
   matchData.participants = await Promise.all(matchData.participants.map(match => normalizeParticipantData(match)))
   
-  console.log(matchData.participants.map(participant => participant.puuid))
+  // console.log(matchData.participants.map(participant => participant.puuid))
 }
 
 module.exports = {

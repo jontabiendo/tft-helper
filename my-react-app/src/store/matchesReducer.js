@@ -25,8 +25,8 @@ export const matchesSlice = createSlice({
   },
   reducers: {
     getMatchesAction(state, action) {
-      console.log("state: ", state)
-      console.log("action ", action.payload)
+      // console.log("state: ", state)
+      // console.log("action ", action.payload)
       state.matches = action.payload
     },
     reverseMatchesAction(state, action) {
@@ -36,7 +36,7 @@ export const matchesSlice = createSlice({
 })
 
 async function fetchMatches(name) {
-  console.log("fetching...")
+  // console.log("fetching...")
   const res = await fetch(`http://localhost:3000/riot/${name}`, {
     method: "GET",
     headers: {

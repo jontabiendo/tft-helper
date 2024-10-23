@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { redirect, Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { reverse } from './store/matchesReducer';
-import './App.css'
-import { useModal, Modal } from '../context/modal';
-import  LandingPage  from './components/LandingPage'
-import SummonerPage  from './components/SummonerPage'
-import OpenModalButton from './components/OpenModalButton';
-import Loading from './components/LoadingModal';
-import { getMatches, reverseMatchesAction, getMatchesAction } from './store/matchesReducer';
-import { setSummoner } from './store/summonerReducer';
+// import './App.css'
+import { useModal, Modal } from '../../../context/modal';
+import OpenModalButton from '../OpenModalButton';
+import Loading from '../LoadingModal';
+import { getMatches, reverseMatchesAction, getMatchesAction } from '../../store/matchesReducer';
+import { setSummoner } from '../../store/summonerReducer';
 
-function App() {
+function LandingPage() {
   const [search, setSearch] = useState("");
   const [showError, setShowError] = useState(false)
   const matches = useSelector((state) => state.matches)
+  const navigate = useNavigate()
   // const [showSumm, setShowSumm] = useState(false);
   // const [summ, setSumm] = useState(null);
   // const [loading, setLoading] = useState(false)
@@ -35,8 +34,7 @@ function App() {
         e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
         dispatch(setSummoner(e.payload.summoner))
         closeModal()
-
-        return redirect(`/summoner/${search}`)
+        
       });
     } catch (e) {
       setShowError(true)
@@ -60,7 +58,7 @@ function App() {
 
   return (
     <>
-      {/* <h1>TFT Helper</h1>
+      <h1>TFT Helper</h1>
 
       <input type='text' id='search' name='search' required maxLength={24} value={search} onChange={(e) => setSearch(e.target.value)}/>
 
@@ -82,14 +80,8 @@ function App() {
           <button onClick={reverseMatches}>Reverse Matches</button>
         </>
       ) : null}
-       */}
-       <Routes>
-        <Route exact path='/' element={<LandingPage />} />
-        <Route path='/summoner' element={<SummonerPage />} />
-
-       </Routes>
-    </> 
+    </>
   )
 }
 
-export default App
+export default LandingPage;

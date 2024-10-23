@@ -10,7 +10,7 @@ export const summonerSlice = createSlice({
   reducers: {
     setSummoner(state, action) {
       // debugger
-      console.log("setSummoner: ", action);
+      // console.log("setSummoner: ", action);
       state.summoner = action.payload
     }
   }

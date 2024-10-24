@@ -32,6 +32,9 @@ router.get('/:summoner', async function(req, res, next) {
     return e.data
   }
   );
+  console.log( summonerInfo)
+
+  summonerInfo.name = req.params.summoner
 
   const count = 5;
   const rawMatchList = Array(count);

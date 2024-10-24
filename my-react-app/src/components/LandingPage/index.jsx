@@ -9,22 +9,17 @@ import Loading from '../LoadingModal';
 import { getMatches, reverseMatchesAction, getMatchesAction } from '../../store/matchesReducer';
 import { setSummoner } from '../../store/summonerReducer';
 
+import './LandingPage.css'
+
 function LandingPage() {
   const [search, setSearch] = useState("");
   const [showError, setShowError] = useState(false)
-  const matches = useSelector((state) => state.matches)
   const navigate = useNavigate()
-  // const [showSumm, setShowSumm] = useState(false);
-  // const [summ, setSumm] = useState(null);
-  // const [loading, setLoading] = useState(false)
-  // const [content, setContent] = useState([]);
   const {closeModal, modalRef, modalContent} = useModal();
-  // debugger
 
   const dispatch = useDispatch();
 
   async function findSummoner() {
-    // console.log(search)
     
     try {
       const res = await dispatch(getMatches(search))
@@ -35,53 +30,29 @@ function LandingPage() {
         dispatch(setSummoner(e.payload.summoner))
         closeModal()
 
-        navigate('/summoner')
+        navigate(`/summoner`)
       });
     } catch (e) {
       setShowError(true)
       closeModal()
     }
 
-    // setSumm(await res)
-
-    // console.log(content)
-
-    // setShowSumm(true);
-
     return null
   }
 
-  // function reverseMatches() {
-  //   dispatch(reverseMatchesAction(matches))
-  // }
-
-  // console.log(matches)
-
   return (
-    <>
+    <div id='landing-div'>
       <h1>TFT Helper</h1>
 
       <input type='text' id='search' name='search' required maxLength={24} value={search} onChange={(e) => setSearch(e.target.value)}/>
 
       <OpenModalButton modalComponent={Loading} buttonText="Find Summoner" onButtonClick={findSummoner}/>
 
-      <OpenModalButton modalComponent={Loading} buttonText="Reverse Matches" onButtonClick={
-        () => {
-          dispatch(reverseMatchesAction())
-          closeModal()
-        }}
-      />
-
       {showError ? (
         <p className='error-text'>Summoner Not Found</p>
       ) : null}
 
-      {matches.length > 0 ? (
-        <>
-          <button onClick={reverseMatches}>Reverse Matches</button>
-        </>
-      ) : null}
-    </>
+    </div>
   )
 }
 

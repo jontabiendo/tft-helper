@@ -10,6 +10,7 @@ import OpenModalButton from './components/OpenModalButton';
 import Loading from './components/LoadingModal';
 import { getMatches, reverseMatchesAction, getMatchesAction } from './store/matchesReducer';
 import { setSummoner } from './store/summonerReducer';
+import Nav from './components/Nav';
 
 function App() {
   const [search, setSearch] = useState("");
@@ -83,6 +84,7 @@ function App() {
         </>
       ) : null}
        */}
+       <Nav />
        <Routes>
         <Route exact path='/' element={<LandingPage />} />
         <Route path='/summoner' element={<SummonerPage />} />

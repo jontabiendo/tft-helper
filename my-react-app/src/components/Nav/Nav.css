@@ -1,0 +1,12 @@
+#nav {
+  border: 2px solid green;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 2rem;
+  width: 1856px;
+  top: 0;
+  left: 0;
+  right: 0;
+}

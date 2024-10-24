@@ -1,5 +1,9 @@
 function normalizeMatchDataById(match, id, queueId){
-  // console.log(match)
+  console.log("***")
+  console.log("***")
+  console.log("***")
+
+  console.log(match)
   relevantInfo = match.filter(player => player.puuid === id)[0]
 
   delete relevantInfo.companion
@@ -32,7 +36,14 @@ function normalizeMatchDataById(match, id, queueId){
   })
 
   relevantInfo['queueId'] = queueId
-  
+
+  console.log(relevantInfo)
+  console.log("***")
+
+  console.log("***")
+
+  console.log("***")
+
   return relevantInfo
 }
 

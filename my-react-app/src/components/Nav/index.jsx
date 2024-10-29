@@ -43,7 +43,7 @@ function Nav() {
 
   return (
     <div id="nav">
-      <h1>TFT Helper</h1>
+      <h1 id="nav-title">TFT Helper</h1>
       
       <div id="search-div">
         <input type='text' id='search' name='search' required maxLength={24} value={search} onChange={(e) => setSearch(e.target.value)}/>

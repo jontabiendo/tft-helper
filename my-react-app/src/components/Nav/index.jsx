@@ -29,6 +29,8 @@ function Nav() {
         dispatch(setSummoner(e.payload.summoner))
         closeModal()
 
+        setShowError(false)
+
         navigate(`/summoner`)
       });
     } catch (e) {
@@ -49,7 +51,7 @@ function Nav() {
         <OpenModalButton modalComponent={Loading} buttonText="Find Summoner" onButtonClick={findSummoner}/>
 
         {showError ? (
-          <p className='error-text'>Summoner Not Found</p>
+          <p className='error-text' >Summoner Not Found</p>
         ) : null}
       </div>
     </div>

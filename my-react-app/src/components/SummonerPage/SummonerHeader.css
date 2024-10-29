@@ -1,0 +1,16 @@
+#summoner-page {
+  margin-top: 200px;
+}
+
+#summoner-header {
+  display: flex;
+  flex-direction: column;
+  width: 1702px;
+  margin: 0 100px;
+  /* justify-content: space-around; */
+}
+
+#rankings-tiles-div {
+  display: flex;
+  justify-content: space-around;
+}

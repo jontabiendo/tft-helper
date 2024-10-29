@@ -16,6 +16,7 @@ const axiosNA1 = axios.create({
 router.get('/:summoner', async function(req, res, next) {
   const start = Date.now();
   let summoner;
+  // console.log('here')
 
   try {
     summoner = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${req.params.summoner}/NA1?api_key=${process.env.RIOT_API_KEY}`)
@@ -32,7 +33,7 @@ router.get('/:summoner', async function(req, res, next) {
     return e.data
   }
   );
-  console.log( summonerInfo)
+  // console.log( summonerInfo)
 
   summonerInfo.name = req.params.summoner
 

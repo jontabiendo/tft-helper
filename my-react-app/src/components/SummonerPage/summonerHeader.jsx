@@ -1,14 +1,21 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../../../context/modal";
+import OpenModalButton from "../OpenModalButton";
+import Loading from "../LoadingModal";
+import { getMatches } from "../../store/matchesReducer";
 
-function SummonerHeader(summoner) {
-  summoner = summoner.summoner
+function SummonerHeader() {
+  const dispatch = useDispatch();
+  const summoner = useSelector(state => state.summoner.summoner)
+
+  const { closeModal } = useModal();
+  // summoner = summoner.summoner
   const revisionDiff = Date.now() - new Date(summoner.revisionDate)
-  console.log(Date.now() - new Date(summoner.revisionDate))
   let revisionTime;
 
   switch (revisionDiff) {
     case revisionDiff < 60000:
-      
       revisionTime = `${Math.floor(revisionDiff / 60000)} minutes ago`
       break
     case revisionDiff < 3600000:
@@ -25,15 +32,32 @@ function SummonerHeader(summoner) {
       break
   }
 
+  async function updateSummoner() {
+    
+    try {
+      const res = await dispatch(getMatches(summoner.name))
+        .then(e => {
+        dispatch(getMatchesAction(e.payload.matches))
+        e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
+        dispatch(setSummoner(e.payload.summoner))
+        closeModal()
 
+
+      });
+    } catch (e) {
+      closeModal()
+    }
+
+    return null
+  };
 
   return (
     <div id="summoner-header">
       <div id="summoner-meta-div">
         <p className="light-p">Level {summoner.summonerLevel}</p>
         <h2 id='summoner-name'>{summoner.name}</h2>
-        <button className="accent-button-a">Update</button>
-        <button className="accent-button-b">Set 11 Report</button>
+        <OpenModalButton modalComponent={Loading} buttonText="Update" buttonClass="accent-button-a" onButtonClick={updateSummoner}/>
+        <button className="accent-button-b" onClick={() => console.log('In progress...')}>Set 11 Report</button>
         <p className="light-p">Last Updated: {revisionTime}</p>
       </div>
       <div id="rankings-div">
@@ -47,7 +71,12 @@ function SummonerHeader(summoner) {
             <p>Wins: {summoner.rankings.RANKED_TFT.wins}</p>
             <p>Losses: {summoner.rankings.RANKED_TFT.losses}</p>
           </div>
-        ) : null}
+        ) : (
+          <div className="'ranking-tile">
+            <h5>Ranked</h5>
+            <p>Unranked</p>
+          </div>
+        )}
           {summoner.rankings.RANKED_TFT_DOUBLE_UP ? (
             <div className="ranking-tile">
             <h5>Double Up</h5>
@@ -55,7 +84,12 @@ function SummonerHeader(summoner) {
             <p>Wins: {summoner.rankings.DOUBLE_UP.wins}</p>
             <p>Losses: {summoner.rankings.DOUBLE_UP.losses}</p>
           </div>
-        ) : null}
+        ) : (
+          <div className="'ranking-tile">
+            <h5>Double Up</h5>
+            <p>Unranked</p>
+          </div>
+        )}
         {summoner.rankings.RANKED_TFT_TURBO ? (
           <div className="ranking-tile">
             <h5>Hyper Roll</h5>
@@ -63,7 +97,12 @@ function SummonerHeader(summoner) {
             <p>Wins: {summoner.rankings.RANKED_TFT_TURBO.wins}</p>
             <p>Losses: {summoner.rankings.RANKED_TFT_TURBO.losses}</p>
           </div>
-        ) : null}
+        ) : (
+          <div className="'ranking-tile">
+            <h5>Hyper Roll</h5>
+            <p>Unranked</p>
+          </div>
+        )}
       </div>
       </div>
 

@@ -2,12 +2,15 @@ import React from "react";
 
 function SummonerHeader(summoner) {
   summoner = summoner.summoner
-  console.log(summoner)
+  console.log((Date.now() - new Date(summoner.revisionDate) ) / 1000)
   return (
     <div id="summoner-header">
       <div id="summoner-meta-div">
-        <p>Level {summoner.summonerLevel}</p>
-        <h2>{summoner.name}</h2>
+        <p id="level-p">Level {summoner.summonerLevel}</p>
+        <h2 id='summoner-name'>{summoner.name}</h2>
+        <button className="accent-button-a">Update</button>
+        <button className="accent-button-b">Set 11 Report</button>
+        <p>Last Updated: {Math.floor((Date.now() - new Date(summoner.revisionDate)) / 86400000)}</p>
       </div>
       <div id="rankings-div">
         <h3>Rankings: </h3>

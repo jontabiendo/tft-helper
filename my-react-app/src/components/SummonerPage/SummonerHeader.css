@@ -10,7 +10,39 @@
   /* justify-content: space-around; */
 }
 
+#summoner-meta-div {
+  border: 1px solid #C89B3C;
+  display: flex;
+  align-items: center;
+}
+
+#level-p {
+  margin: 1rem;
+}
+
+#summoner-name {
+  color: #C89B3C;
+  margin: 1rem;
+}
+
+.accent-button-a {
+  background-color: #2E0E02;
+  margin: 1rem;
+}
+
+.accent-button-b {
+  background-color: #3A506B;
+  margin: 1rem;
+}
+
+#rankings-div {
+  background-color: #EEE5E9;
+  margin-top: 1rem;
+}
+
 #rankings-tiles-div {
   display: flex;
   justify-content: space-around;
+
 }
+

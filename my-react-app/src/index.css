@@ -36,6 +36,14 @@ h1 {
   color: #C89B3C;
 }
 
+h3, h4, h5 {
+  color: #B8B3BE;
+}
+
+p {
+  color: #EEE5E9;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

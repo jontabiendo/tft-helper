@@ -16,8 +16,9 @@
   align-items: center;
 }
 
-#level-p {
+.light-p {
   margin: 1rem;
+  color: #EEE5E9;
 }
 
 #summoner-name {

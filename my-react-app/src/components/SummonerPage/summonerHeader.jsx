@@ -2,15 +2,39 @@ import React from "react";
 
 function SummonerHeader(summoner) {
   summoner = summoner.summoner
-  console.log((Date.now() - new Date(summoner.revisionDate) ) / 1000)
+  const revisionDiff = Date.now() - new Date(summoner.revisionDate)
+  console.log(Date.now() - new Date(summoner.revisionDate))
+  let revisionTime;
+
+  switch (revisionDiff) {
+    case revisionDiff < 60000:
+      
+      revisionTime = `${Math.floor(revisionDiff / 60000)} minutes ago`
+      break
+    case revisionDiff < 3600000:
+      revisionTime = `${Math.floor(revisionDiff / 60000)} hour ago`
+      break
+    case revisionDiff < 86400000:
+      revisionTime = `${Math.floor(revisionDiff / 3600000)} hours ago`
+      break
+    case revisionDiff < 172800000:
+      revisionTime = `${Math.floor(revisionDiff / 86400000)} day ago`
+      break
+    default:
+      revisionTime = `${Math.floor(revisionDiff / 86400000)} days ago`
+      break
+  }
+
+
+
   return (
     <div id="summoner-header">
       <div id="summoner-meta-div">
-        <p id="level-p">Level {summoner.summonerLevel}</p>
+        <p className="light-p">Level {summoner.summonerLevel}</p>
         <h2 id='summoner-name'>{summoner.name}</h2>
         <button className="accent-button-a">Update</button>
         <button className="accent-button-b">Set 11 Report</button>
-        <p>Last Updated: {Math.floor((Date.now() - new Date(summoner.revisionDate)) / 86400000)}</p>
+        <p className="light-p">Last Updated: {revisionTime}</p>
       </div>
       <div id="rankings-div">
         <h3>Rankings: </h3>

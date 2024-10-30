@@ -1,13 +1,12 @@
 #summoner-page {
-  margin-top: 200px;
+  margin: 200px 100px 0 100px;
 }
 
 #summoner-header {
   display: flex;
   flex-direction: column;
   width: 1702px;
-  margin: 0 100px;
-  /* justify-content: space-around; */
+  justify-content: space-around;
 }
 
 #summoner-meta-div {
@@ -39,20 +38,22 @@
 #rankings-div {
   background-color: #EEE5E9;
   margin-top: 1rem;
+  width: 1702px;
+  border: 1px solid #C89B3C;
 }
 
 #rankings-tiles-div {
   display: flex;
   justify-content: space-around;
-
 }
 
 #recent-stats-div {
   background-color: #EEE5E9;
   display: flex;
   flex-direction: column;
-  margin: 1rem 1rem 0;
+  margin-top: 1rem;
   border: 1px solid #C89B3C;
+  width: 1702px;
 }
 
 #stat-sections-container {
@@ -65,6 +66,36 @@
   background-color: #EEE5E9;
   display: flex;
   flex-direction: column;
-  margin: 0 1rem;
   border: 1px solid #C89B3C;
+  width: 1702px;
+}
+
+.match-tile {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.match-player-metadata-div{
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #2E0E02;
+}
+
+.match-player-boarddata-div {
+  display: flex;
+  align-items: center;
+}
+
+.match-player-metadata-div > h6, p {
+  margin: 1rem;
+}
+
+.match-augments-div {
+  display: flex;
+}
+
+.match-units-div {
+  display: flex;
+  flex-direction: row;
 }

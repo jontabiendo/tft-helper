@@ -5,9 +5,9 @@ import OpenModalButton from "../OpenModalButton";
 import Loading from "../LoadingModal";
 import { getMatches } from "../../store/matchesReducer";
 
-function SummonerHeader() {
+function SummonerHeader({summoner}) {
   const dispatch = useDispatch();
-  const summoner = useSelector(state => state.summoner.summoner)
+  summoner = summoner
 
   const { closeModal } = useModal();
   // summoner = summoner.summoner

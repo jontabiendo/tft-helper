@@ -1,5 +1,6 @@
 #summoner-page {
   margin: 200px 100px 0 100px;
+  /* width: 1502px; */
 }
 
 #summoner-header {
@@ -79,7 +80,6 @@
   display: flex;
   align-items: center;
   border-top: 2px solid #2E0E02;
-  
   border-bottom: 1px solid#3A506B;
 }
 

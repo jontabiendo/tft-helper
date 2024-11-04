@@ -1,7 +1,7 @@
 import React from "react";
 
 function MatchTile({match}){
-  console.log(match)
+  // console.log(match)
   let setName;
   switch (match.queueId) {
     case 6110:
@@ -47,7 +47,7 @@ function MatchTile({match}){
 }
 
 function Matches({matches}) {
-  console.log(matches)
+  // console.log(matches)
 
   return (
     <div id="matches-div">

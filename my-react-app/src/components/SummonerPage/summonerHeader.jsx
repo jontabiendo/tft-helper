@@ -32,6 +32,27 @@ function SummonerHeader({summoner}) {
       break
   }
 
+  // console.log(summoner.rankings)
+
+  let rankedLinks = {
+    "RANKED_TFT": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10",
+    "RANKED_TFT_DOUBLEUP": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10",
+    "RANKED_TFT_TURBO": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10"
+  }
+  for (const ranking of Object.keys(summoner.rankings)) {
+    if (ranking === "RANKED_TFT" || ranking === "RANKED_DOUBLE_UP") {
+      if (summoner.rankings[ranking].rank.startsWith("GOLD")) {
+        rankedLinks[ranking] =  "https://cdn.dak.gg/tft/images2/tft/tiers/gold.png?set=10"
+      }
+    } else {
+      if (summoner.rankings[ranking].ratedTier === "ORANGE") {
+        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/orange.png?set=10"
+      }
+    }
+  }
+
+  console.log(rankedLinks)
+
   async function updateSummoner() {
     
     try {
@@ -67,6 +88,7 @@ function SummonerHeader({summoner}) {
         {summoner.rankings.RANKED_TFT ? (
           <div className="ranking-tile">
             <h5>Ranked</h5>
+            <img src={rankedLinks["RANKED_TFT"]} />
             <p>{summoner.rankings.RANKED_TFT.rank} {summoner.rankings.RANKED_TFT.leaguePoints}</p>
             <p>Wins: {summoner.rankings.RANKED_TFT.wins}</p>
             <p>Losses: {summoner.rankings.RANKED_TFT.losses}</p>
@@ -74,12 +96,14 @@ function SummonerHeader({summoner}) {
         ) : (
           <div className="'ranking-tile">
             <h5>Ranked</h5>
-            <p>Unranked</p>
+            <img src="https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10" />
+            <p>Unrated</p>
           </div>
         )}
           {summoner.rankings.RANKED_TFT_DOUBLE_UP ? (
             <div className="ranking-tile">
             <h5>Double Up</h5>
+            <img src={rankedLinks["RANKED_TFT_DOUBLE_UP"]} />
             <p>{summoner.rankings.RANKED_TFT_DOUBLE_UP.rank} {summoner.rankings.DOUBLE_UP.leaguePoints}</p>
             <p>Wins: {summoner.rankings.DOUBLE_UP.wins}</p>
             <p>Losses: {summoner.rankings.DOUBLE_UP.losses}</p>
@@ -87,12 +111,14 @@ function SummonerHeader({summoner}) {
         ) : (
           <div className="'ranking-tile">
             <h5>Double Up</h5>
-            <p>Unranked</p>
+            <img src="https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10" />
+            <p>Unrated</p>
           </div>
         )}
         {summoner.rankings.RANKED_TFT_TURBO ? (
           <div className="ranking-tile">
             <h5>Hyper Roll</h5>
+            <img src={rankedLinks["RANKED_TFT_TURBO"]} />
             <p>{summoner.rankings.RANKED_TFT_TURBO.ratedTier} {summoner.rankings.RANKED_TFT_TURBO.ratedRating}</p>
             <p>Wins: {summoner.rankings.RANKED_TFT_TURBO.wins}</p>
             <p>Losses: {summoner.rankings.RANKED_TFT_TURBO.losses}</p>
@@ -100,7 +126,8 @@ function SummonerHeader({summoner}) {
         ) : (
           <div className="'ranking-tile">
             <h5>Hyper Roll</h5>
-            <p>Unranked</p>
+            <img className="rank-shield" src="https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10" />
+            <p>Unrated</p>
           </div>
         )}
       </div>

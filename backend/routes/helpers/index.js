@@ -22,7 +22,11 @@ function normalizeMatchDataById(match, id, queueId){
   })
 
   relevantInfo.units = relevantInfo.units.sort((a, b) => {
-    if (a.tier > b.tier) {
+    if (a.itemNames.length > b.itemNames.length) {
+      return -1
+    } else if (a.itemNames.length < b.itemNames.length) {
+      return 1
+    } else if (a.tier > b.tier) {
       return -1
     } else if (a.tier < b.tier) {
       return 1

@@ -79,7 +79,9 @@
 .match-player-metadata-div{
   display: flex;
   align-items: center;
-  border-top: 1px solid #2E0E02;
+  border-top: 2px solid #2E0E02;
+  
+  border-bottom: 1px solid#3A506B;
 }
 
 .match-player-boarddata-div {
@@ -98,4 +100,67 @@
 .match-units-div {
   display: flex;
   flex-direction: row;
+}
+
+.match-units-div > div {
+  margin: 1px;
+  width: 50px;
+}
+
+.match-units-div > div > img {
+  width: 40px;
+}
+
+.match-units-div > div > p {
+  font-size: 10px;
+  margin: 2px;
+}
+
+.unit-8-tile-div > p {
+  color: #C89B3C;
+}
+
+.unit-8-tile-div > img {
+  border: 1px solid #C89B3C;
+  width: 100%;
+}
+
+.unit-6-tile-div > p {
+  color: #C89B3C;
+}
+
+.unit-6-tile-div > img {
+  border: 1px solid #C89B3C;
+}
+
+.unit-4-tile-div > p {
+  color: purple;
+}
+
+.unit-4-tile-div > img {
+  border: 2px solid purple;
+}
+
+.unit-2-tile-div > p {
+  color: navy;
+}
+
+.unit-2-tile-div > img {
+  border: 2px solid navy;
+}
+
+.unit-1-tile-div > p {
+  color: green;
+}
+
+.unit-1-tile-div > img {
+  border: 2px solid green;
+}
+
+.unit-0-tile-div > p {
+  color: gray;
+}
+
+.unit-0-tile-div > img {
+  border: 2px solid gray;
 }

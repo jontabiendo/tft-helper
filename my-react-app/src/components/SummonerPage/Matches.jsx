@@ -32,9 +32,10 @@ function MatchTile({match}){
         </div>
         <div className="match-units-div">
           {match.units.map((unit) => (
-            <div className="unit-tile-div">
-              <p>{unit.tier} Star</p>
-              <p>{unit.character_id.split("_").pop()}</p>
+            <div className={`unit-${unit.rarity}-tile-div`}>
+              <p>{new Array(unit.tier).fill(<i class="fa-solid fa-star"></i>)}</p>
+              <img src={`https://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${unit.character_id.split("_").pop()}.png`} />
+              <span>{new Array(unit.itemNames.length).fill(<i class="fa-solid fa-square"></i>)}</span>
             </div>
           ))}
         </div>

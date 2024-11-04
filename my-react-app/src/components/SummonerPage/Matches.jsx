@@ -22,7 +22,9 @@ function MatchTile({match}){
         <p>Level: {match.level}</p>
         <div className="match-traits-div">
           {match.traits.map((trait) => (
-            <p>{trait.name}</p>
+            <div className={`trait-${trait.style}-tile`}>
+              <img className="trait-img" src={trait.link} />
+            </div>
           ))}
         </div>
         <div className="match-augments-div">

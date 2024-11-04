@@ -73,7 +73,6 @@
 .match-tile {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
 }
 
 .match-player-metadata-div{
@@ -91,6 +90,47 @@
 
 .match-player-metadata-div > h6, p {
   margin: 1rem;
+}
+
+.match-traits-div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 250px;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+.trait-img {
+  width: 75%;
+}
+
+.trait-1-tile, .trait-2-tile, .trait-3-tile, .trait-4-tile, .trait-5-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  height: 58px;
+}
+
+.trait-5-tile {
+  background: url(https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg?3) center center / cover no-repeat;
+}
+
+.trait-4-tile {
+  background: url(https://cdn.dak.gg/tft/images2/tft/traits/background/silver.svg?3) center center / cover no-repeat;
+}
+
+.trait-3-tile {
+  background: url(https://cdn.dak.gg/tft/images2/tft/traits/background/gold.svg?3) center center / cover no-repeat;
+}
+
+.trait-2-tile {
+  background: url(https://cdn.dak.gg/tft/images2/tft/traits/background/silver.svg?3) center center / cover no-repeat;
+}
+
+.trait-1-tile {
+ background: url(https://cdn.dak.gg/tft/images2/tft/traits/background/bronze.svg?3) center center / cover no-repeat;
 }
 
 .match-augments-div {

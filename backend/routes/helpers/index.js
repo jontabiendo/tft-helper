@@ -1,9 +1,14 @@
-function normalizeMatchDataById(match, id, queueId){
-  // console.log("***")
-  // console.log("***")
-  // console.log("***")
+const traits = require('./traitLinks')
 
-  // console.log(match)
+function assignTraitLinks(traitsList) {
+  traitsList.forEach(trait => {
+    trait.link = traits.traits[`${trait.name}`]
+  });
+
+  return traitsList
+}
+
+function normalizeMatchDataById(match, id, queueId){
   relevantInfo = match.filter(player => player.puuid === id)[0]
 
   delete relevantInfo.companion
@@ -20,6 +25,8 @@ function normalizeMatchDataById(match, id, queueId){
       return 0
     }
   })
+
+  relevantInfo.traits = assignTraitLinks(relevantInfo.traits)
 
   relevantInfo.units = relevantInfo.units.sort((a, b) => {
     if (a.itemNames.length > b.itemNames.length) {
@@ -40,13 +47,6 @@ function normalizeMatchDataById(match, id, queueId){
   })
 
   relevantInfo['queueId'] = queueId
-
-  // console.log(relevantInfo)
-  // console.log("***")
-
-  // console.log("***")
-
-  // console.log("***")
 
   return relevantInfo
 }

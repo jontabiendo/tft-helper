@@ -48,6 +48,10 @@
   justify-content: space-around;
 }
 
+.rank-img {
+  width: 100px;
+}
+
 #recent-stats-div {
   background-color: #EEE5E9;
   display: flex;

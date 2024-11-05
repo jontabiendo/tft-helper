@@ -32,54 +32,6 @@ function SummonerHeader({summoner}) {
       break
   }
 
-  // console.log(summoner.rankings)
-
-  let rankedLinks = {
-    "RANKED_TFT": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10",
-    "RANKED_TFT_DOUBLE_UP": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10",
-    "RANKED_TFT_TURBO": "https://cdn.dak.gg/tft/images2/tft/tiers/provisional.png?set=10"
-  }
-  for (const ranking of Object.keys(summoner.rankings)) {
-    if (ranking === "RANKED_TFT" || ranking === "RANKED_TFT_DOUBLE_UP") {
-      if (summoner.rankings[ranking].rank.startsWith("IRON")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/iron.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("BRONZE")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/bronze.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("SILVER")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/silver.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("GOLD")) {
-        rankedLinks[ranking] =  "https://cdn.dak.gg/tft/images2/tft/tiers/gold.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("PLATINUM")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/platinum.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("EMERALD")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/emerald.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("DIAMOND")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/diamond.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("MASTER")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/master.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("GRANDMASTER")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/grandmaster.png?set=10"
-      }
-      if (summoner.rankings[ranking].rank.startsWith("CHALLENGER")) {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/challenger.png?set=10"
-      }
-    } else {
-      if (summoner.rankings[ranking].ratedTier === "ORANGE") {
-        rankedLinks[ranking] = "https://cdn.dak.gg/tft/images2/tft/tiers/orange.png?set=10"
-      }
-    }
-  }
-
-  console.log(rankedLinks)
-
   async function updateSummoner() {
     
     try {
@@ -114,7 +66,7 @@ function SummonerHeader({summoner}) {
 
           <div className="ranking-tile">
             <h5>Ranked</h5>
-            <img className="rank-img" src={rankedLinks["RANKED_TFT"]} />
+            <img className="rank-img" src={`https://cdn.dak.gg/tft/images2/tft/tiers/${summoner.rankings["RANKED_TFT"] ? (summoner.rankings["RANKED_TFT"]).rank.split(" ")[0].toLowerCase() : 'provisional'}.png?set=10`} />
         {summoner.rankings.RANKED_TFT ? (
           <>
             <p>{summoner.rankings.RANKED_TFT.rank} {summoner.rankings.RANKED_TFT.leaguePoints}LP</p>
@@ -126,7 +78,7 @@ function SummonerHeader({summoner}) {
           </div>
           <div className="ranking-tile">
             <h5>Double Up</h5>
-            <img className="rank-img" src={rankedLinks["RANKED_TFT_DOUBLE_UP"]} />
+            <img className="rank-img" src={`https://cdn.dak.gg/tft/images2/tft/tiers/${summoner.rankings["RANKED_TFT_DOUBLE_UP"] ? (summoner.rankings["RANKED_TFT_DOUBLE_UP"]).rank.split(" ")[0].toLowerCase() : 'provisional'}.png?set=10`} />
             {summoner.rankings.RANKED_TFT_DOUBLE_UP ? (
               <>
                 <p>{summoner.rankings.RANKED_TFT_DOUBLE_UP.rank} {summoner.rankings.RANKED_TFT_DOUBLE_UP.leaguePoints}LP</p>
@@ -138,7 +90,7 @@ function SummonerHeader({summoner}) {
           </div>
           <div className="ranking-tile">
             <h5>Hyper Roll</h5>
-            <img className="rank-img" src={rankedLinks["RANKED_TFT_TURBO"]} />
+            <img className="rank-img" src={`https://cdn.dak.gg/tft/images2/tft/tiers/${summoner.rankings["RANKED_TFT_TURBO"] ?summoner.rankings["RANKED_TFT_TURBO"].ratedTier.toLowerCase() : 'provisional'}.png?set=10`} />
             {summoner.rankings.RANKED_TFT_TURBO ? (
               <>
                 <p>{summoner.rankings.RANKED_TFT_TURBO.ratedTier} {summoner.rankings.RANKED_TFT_TURBO.ratedRating}</p>

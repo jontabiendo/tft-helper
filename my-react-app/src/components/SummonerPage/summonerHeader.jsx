@@ -63,7 +63,6 @@ function SummonerHeader({summoner}) {
       <div id="rankings-div">
         <h3>Rankings: </h3>
         <div id="rankings-tiles-div">
-
           <div className="ranking-tile">
             <h5>Ranked</h5>
             <img className="rank-img" src={`https://cdn.dak.gg/tft/images2/tft/tiers/${summoner.rankings["RANKED_TFT"] ? (summoner.rankings["RANKED_TFT"]).rank.split(" ")[0].toLowerCase() : 'provisional'}.png?set=10`} />
@@ -93,7 +92,7 @@ function SummonerHeader({summoner}) {
             <img className="rank-img" src={`https://cdn.dak.gg/tft/images2/tft/tiers/${summoner.rankings["RANKED_TFT_TURBO"] ?summoner.rankings["RANKED_TFT_TURBO"].ratedTier.toLowerCase() : 'provisional'}.png?set=10`} />
             {summoner.rankings.RANKED_TFT_TURBO ? (
               <>
-                <p>{summoner.rankings.RANKED_TFT_TURBO.ratedTier} {summoner.rankings.RANKED_TFT_TURBO.ratedRating}</p>
+                <p>{summoner.rankings.RANKED_TFT_TURBO.ratedTier === "ORANGE" ? "Hyper" : summoner.rankings.RANKED_TFT_TURBO.ratedTier} {summoner.rankings.RANKED_TFT_TURBO.ratedRating}</p>
                 <p>Wins: {summoner.rankings.RANKED_TFT_TURBO.wins} Losses: {summoner.rankings.RANKED_TFT_TURBO.losses}</p>
               </>
             ) : (

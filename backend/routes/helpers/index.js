@@ -123,10 +123,11 @@ async function normalizeDatabaseMatchData(matchData) {
 
   matchData = {...matchData, ...matchData.info}
   delete matchData.info
+  // console.log(matchData)
 
   matchData.participants = await Promise.all(matchData.participants.map(match => normalizeParticipantData(match)))
   
-  // console.log(matchData.participants.map(participant => participant.puuid))
+  return matchData
 }
 
 module.exports = {

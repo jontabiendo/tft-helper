@@ -16,12 +16,12 @@ const axiosNA1 = axios.create({
 router.get('/:summoner', async function(req, res, next) {
   const start = Date.now();
   let summoner;
-  // console.log('here')
-
+  
   try {
     summoner = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${req.params.summoner}/NA1?api_key=${process.env.RIOT_API_KEY}`)
-
+    
   } catch(e) {
+    console.log('here', e)
     res.status(404).send("Summoner not found")
     return
   }
@@ -60,6 +60,8 @@ router.get('/:summoner', async function(req, res, next) {
     })()
   ])
 
+  // console.log(await matches)
+
   fullInfoList.pop()
     return fullInfoList
   })
@@ -69,10 +71,15 @@ router.get('/:summoner', async function(req, res, next) {
     summoner: summonerInfo,
     matches: matches
   }
-  console.log("Total time: ", data.time)
+  // console.log("Total time: ", data.time)
   res.status(200).send(data)
 
-  normalizeDatabaseMatchData(rawMatchList.pop())
+  const backendTime = Date.now()
+
+  const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
+
+  
+
 })
 
 module.exports = router;

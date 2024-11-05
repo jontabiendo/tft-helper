@@ -15,7 +15,7 @@ module.exports = {
    return queryInterface.bulkInsert('NormalRankings', [
     {
       id: "WaterS0lid",
-      rank: 'PLATNIUM III',
+      rank: 'PLATINUM III',
       leaguePoints: 75,
       wins: 37,
       losses: 40,

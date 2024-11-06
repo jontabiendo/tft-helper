@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Participant.belongsTo(models.MatchParticipants, {
-      //   foreignKey: 'participant'
-      // })
+      Participant.belongsTo(models.MatchParticipants, {
+        foreignKey: 'id'
+      })
       Participant.belongsTo(models.Summoner, {
         foreignKey: 'id'
       })

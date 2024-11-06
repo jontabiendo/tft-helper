@@ -57,7 +57,7 @@ app.use('/users', usersRouter);
 app.use('/riot', riotRouter);
 
 const { Op } = require('sequelize');
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, participant, Match, MatchParticipant } = require('./db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, participant, Match, MatchParticipants, SummonerMatches } = require('./db/models');
 
 async function eagerRankings() {
   const summoner = await Summoner.findOne({
@@ -86,7 +86,22 @@ async function eagerRankings() {
       ]
     },
     {
-      model: participant,
+      model: SummonerMatches,
+      include: [
+        {
+          model: Match,
+          include: [
+            {
+              model: MatchParticipants,
+              include: [
+                {
+                  model: participant
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
   })

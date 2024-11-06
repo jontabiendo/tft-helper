@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       Summoner.hasOne(models.Ranking, {
         foreignKey: 'summonerId'
       })
+      Summoner.hasMany(models.participant, {
+        foreignKey: 'summonerId',
+      })
     }
   }
   Summoner.init({
@@ -26,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Summoner',
+    timestamps: false
   });
   return Summoner;
 };

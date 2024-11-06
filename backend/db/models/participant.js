@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Participant.belongsTo(models.MatchParticipants, {
+      //   foreignKey: 'participant'
+      // })
+      Participant.belongsTo(models.Summoner, {
+        foreignKey: 'id'
+      })
     }
   }
   Participant.init({
@@ -29,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'participant',
+    timestamps: false
   });
   return Participant;
 };

@@ -68,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     sequelize,
     modelName: 'Ranking',
+    timestamps: false
   });
   return Ranking;
 };

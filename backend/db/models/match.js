@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Match.hasOne(models.MatchParticipants, {
+        foreignKey: 'matchId'
+      })
     }
   }
   Match.init({
@@ -26,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Match',
+    timestamps: false
   });
   return Match;
 };

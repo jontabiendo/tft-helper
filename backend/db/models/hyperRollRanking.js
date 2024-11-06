@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     sequelize,
     modelName: 'HyperRollRanking',
+    timestamps: false
   });
   return HyperRollRanking;
 };

@@ -3,6 +3,8 @@ const axios = require('axios');
 const { normalizeMatchDataById, normalizeRankedData, normalizeDatabaseMatchData } = require('./helpers');
 const router = express.Router();
 
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, Participant } = require('../db/models')
+
 const axiosAmericas = axios.create({
   baseURL: "https://americas.api.riotgames.com",
   header: { "Access-Control-Allow_Origin" : "*"}
@@ -78,6 +80,7 @@ router.get('/:summoner', async function(req, res, next) {
 
   const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
 
+  console.log(typeof Summoner)
   
 
 })

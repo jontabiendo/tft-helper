@@ -176,6 +176,21 @@ async function dbCommitStarter(data) {
           id: data.summoner.name,
           ...data.summoner.rankings[rank]
         })
+
+        let summRanks = await Ranking.findOne({
+        where: {
+          summonerId: data.summoner.name
+        }
+      })
+      console.log(summRanks)
+      if (summRanks) {
+        summRanks.key = data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
+      } else {
+        Ranking.create({
+          summonerId: data.summoner.name,
+          [key]: data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
+        })
+      }
       }
 
       console.log('rankEntry: ', rankEntry)
@@ -187,6 +202,44 @@ async function dbCommitStarter(data) {
       level: data.summoner.summonerLevel,
       updatedAt: new Date(data.summoner.revisionDate)
     })
+
+    let promiseRes = await Promise.all(Object.keys(data.summoner.rankings).map(async (rank) => {
+      let key;
+      if (rank === 'RANKED_TFT') {
+        key = NormalRanking
+      } else if (rank === 'RANKED_TFT_DOUBLE_UP') {
+        key = DoubleUpRanking
+      } else {
+        key = HyperRollRanking
+      }
+
+      let entry =  await key.create({
+        id: data.summoner.name,
+        ...data.summoner.rankings[rank]
+      })
+      entry.save()
+
+      let summRanks = await Ranking.findOne({
+        where: {
+          summonerId: data.summoner.name
+        }
+      })
+      console.log(summRanks)
+      if (summRanks) {
+        summRanks.key = data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
+      } else {
+        summRanks = await Ranking.create({
+          summonerId: data.summoner.name,
+          [`${key}`.slice(0, 1) + `${key}`.slice(1)]: data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
+        })
+      }
+
+      summRanks.save()
+
+      return
+    }))
+
+    console.log(await promiseRes)
   }
 
   summoner.save()

@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     doubleUpRanking: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       references: { 
         model: "DoubleUpRanking",
         key: 'id'
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     hyperRollRanking: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       references: { 
         model: "HyperRollRanking",
         key: 'id'
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     normalRanking: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       references: { 
         model: "NormalRanking",
         key: 'id'

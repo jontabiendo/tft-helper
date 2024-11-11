@@ -56,59 +56,59 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/riot', riotRouter);
 
-// const { Op } = require('sequelize');
-// const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, participant, Match, MatchParticipants, SummonerMatches } = require('./db/models');
+const { Op } = require('sequelize');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, participant, Match, MatchParticipants, SummonerMatches } = require('./db/models');
 
-// async function eagerRankings() {
-//   const summoner = await Summoner.findOne({
-//     where: {
-//       id: 'WaterS0lid'
-//     },
-//     attributes: ['id', 'updatedAt', 'level'],
-//     // include: [
-//     //   NormalRanking,
-//     //   HyperRollRanking,
-//     //   DoubleUpRanking
-//     // ]
-//     include: [
-//       { 
-//       model: Ranking,
-//       include: [
-//         {
-//           model: NormalRanking,
-//         },
-//         {
-//           model: DoubleUpRanking,
-//         },
-//         {
-//           model: HyperRollRanking,
-//         }
-//       ]
-//     },
-//     {
-//       model: SummonerMatches,
-//       include: [
-//         {
-//           model: Match,
-//           include: [
-//             {
-//               model: MatchParticipants,
-//               include: [
-//                 {
-//                   model: participant
-//                 }
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//   ]
-//   })
-//   console.log("thing: ", await summoner.toJSON())
-//   return await summoner
-// }
-// console.log(eagerRankings())
+async function eagerRankings() {
+  const summoner = await Summoner.findOne({
+    where: {
+      id: 'Wingedpigeon34'
+    },
+    attributes: ['id', 'updatedAt', 'level'],
+    // include: [
+    //   NormalRanking,
+    //   HyperRollRanking,
+    //   DoubleUpRanking
+    // ]
+    include: [
+      { 
+      model: Ranking,
+      include: [
+        {
+          model: NormalRanking,
+        },
+        {
+          model: DoubleUpRanking,
+        },
+        {
+          model: HyperRollRanking,
+        }
+      ]
+    },
+    {
+      model: SummonerMatches,
+      include: [
+        {
+          model: Match,
+          include: [
+            {
+              model: MatchParticipants,
+              include: [
+                {
+                  model: participant
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  })
+  console.log("thing: ", await summoner.toJSON())
+  return await summoner
+}
+console.log(eagerRankings())
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

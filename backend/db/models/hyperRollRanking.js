@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     defaultScope: {
       attributes: [
+        'id',
         'ratedTier',
         'ratedRating',
         'wins',

@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true
     },
-    level: DataTypes.INTEGER
+    level: DataTypes.INTEGER,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Summoner',

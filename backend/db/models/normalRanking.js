@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     defaultScope: {
       attributes: [
+        'id',
         'rank',
         'leaguePoints',
         'wins',

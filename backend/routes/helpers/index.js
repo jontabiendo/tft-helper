@@ -1,4 +1,7 @@
 const traits = require('./traitLinks')
+const { Op } = require('sequelize')
+
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, Participant } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -130,8 +133,69 @@ async function normalizeDatabaseMatchData(matchData) {
   return matchData
 }
 
+async function dbCommitStarter(data) {
+  console.log('Starting commit to db...')
+  console.log(data.summoner.rankings)
+
+  let summoner = await Summoner.findOne({
+    where: {
+      id: data.summoner.name
+    }
+  })
+  if (summoner) {
+    summoner.level = data.summoner.summonerLevel,
+    summoner.updatedAt = new Date(data.summoner.revisionDate)
+
+    Object.keys(data.summoner.rankings).forEach(async (rank) => {
+      console.log('rank: ', rank)
+      let key;
+      if (rank === 'RANKED_TFT') {
+        key = NormalRanking
+      } else if (rank === 'RANKED_TFT_DOUBLE_UP') {
+        key = DoubleUpRanking
+      } else {
+        key = HyperRollRanking
+      }
+      console.log(key)
+
+      
+      let rankEntry = await key.findOne({
+        where: {
+          id: data.summoner.name
+        }
+      })
+
+      console.log('1st instance: ', rankEntry)
+      
+      if (rankEntry) {
+        for (const row of Object.keys(data.summoner.rankings[rank])) {
+          rankEntry[row] = data.summoner.rankings[rank][row]
+        }
+      } else {
+        rankEntry = await key.create({
+          id: data.summoner.name,
+          ...data.summoner.rankings[rank]
+        })
+      }
+
+      console.log('rankEntry: ', rankEntry)
+      rankEntry.save()
+    })
+  } else {
+    summoner = await Summoner.create({
+      id: data.summoner.name,
+      level: data.summoner.summonerLevel,
+      updatedAt: new Date(data.summoner.revisionDate)
+    })
+  }
+
+  summoner.save()
+
+}
+
 module.exports = {
   normalizeMatchDataById,
   normalizeRankedData,
-  normalizeDatabaseMatchData
+  normalizeDatabaseMatchData,
+  dbCommitStarter
 }

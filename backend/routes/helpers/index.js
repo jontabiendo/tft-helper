@@ -139,7 +139,7 @@ async function dbCommitStarter(data) {
 
   let summoner = await Summoner.findOne({
     where: {
-      id: data.summoner.name
+      id: data.summoner.name.toLowerCase()
     }
   })
   if (summoner) {
@@ -147,7 +147,6 @@ async function dbCommitStarter(data) {
     summoner.updatedAt = new Date(data.summoner.revisionDate)
 
     Object.keys(data.summoner.rankings).forEach(async (rank) => {
-      console.log('rank: ', rank)
       let key;
       if (rank === 'RANKED_TFT') {
         key = NormalRanking
@@ -156,7 +155,6 @@ async function dbCommitStarter(data) {
       } else {
         key = HyperRollRanking
       }
-      console.log(key)
 
       
       let rankEntry = await key.findOne({
@@ -164,8 +162,6 @@ async function dbCommitStarter(data) {
           id: data.summoner.name
         }
       })
-
-      console.log('1st instance: ', rankEntry)
       
       if (rankEntry) {
         for (const row of Object.keys(data.summoner.rankings[rank])) {
@@ -182,7 +178,7 @@ async function dbCommitStarter(data) {
           summonerId: data.summoner.name
         }
       })
-      console.log(summRanks)
+
       if (summRanks) {
         summRanks.key = data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
       } else {
@@ -192,8 +188,6 @@ async function dbCommitStarter(data) {
         })
       }
       }
-
-      console.log('rankEntry: ', rankEntry)
       rankEntry.save()
     })
   } else {
@@ -205,12 +199,16 @@ async function dbCommitStarter(data) {
 
     let promiseRes = await Promise.all(Object.keys(data.summoner.rankings).map(async (rank) => {
       let key;
+      let keyString;
       if (rank === 'RANKED_TFT') {
         key = NormalRanking
+        keyString = "normalRanking"
       } else if (rank === 'RANKED_TFT_DOUBLE_UP') {
         key = DoubleUpRanking
+        keyString = 'doubleUpRanking'
       } else {
         key = HyperRollRanking
+        keyString = 'hyperRollRanking'
       }
 
       let entry =  await key.create({
@@ -224,22 +222,21 @@ async function dbCommitStarter(data) {
           summonerId: data.summoner.name
         }
       })
-      console.log(summRanks)
       if (summRanks) {
         summRanks.key = data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
       } else {
         summRanks = await Ranking.create({
           summonerId: data.summoner.name,
-          [`${key}`.slice(0, 1) + `${key}`.slice(1)]: data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
+          [keyString]: data.summoner.name
         })
       }
 
       summRanks.save()
 
-      return
+      return summRanks
     }))
 
-    console.log(await promiseRes)
+    console.log(promiseRes)
   }
 
   summoner.save()

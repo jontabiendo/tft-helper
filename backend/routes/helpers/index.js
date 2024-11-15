@@ -174,15 +174,15 @@ async function dbCommitStarter(data) {
         })
 
         let summRanks = await Ranking.findOne({
-        where: {
-          summonerId: data.summoner.name
-        }
-      })
+          where: {
+            summonerId: data.summoner.name
+          }
+        })
 
-      if (summRanks) {
-        summRanks.key = data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
-      } else {
-        Ranking.create({
+        if (summRanks) {
+          summRanks.key = data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
+        } else {
+          Ranking.create({
           summonerId: data.summoner.name,
           [key]: data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
         })
@@ -197,7 +197,7 @@ async function dbCommitStarter(data) {
       updatedAt: new Date(data.summoner.revisionDate)
     })
 
-    let promiseRes = await Promise.all(Object.keys(data.summoner.rankings).map(async (rank) => {
+    let promiseRes = Object.keys(data.summoner.rankings).forEach(async (rank) => {
       let key;
       let keyString;
       if (rank === 'RANKED_TFT') {
@@ -234,9 +234,9 @@ async function dbCommitStarter(data) {
       summRanks.save()
 
       return summRanks
-    }))
+    })
 
-    console.log(promiseRes)
+    // console.log(promiseRes)
   }
 
   summoner.save()

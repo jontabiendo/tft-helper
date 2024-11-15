@@ -73,17 +73,17 @@ router.get('/:summoner', async function(req, res, next) {
     summoner: summonerInfo,
     matches: matches
   }
-  // console.log("Total time: ", data.time)
+  console.log("Response time: ", data.time)
   res.status(200).send(data)
 
   const backendTime = Date.now()
 
   const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
 
-  console.log(data.summoner)
+  // console.log(data.summoner)
   dbCommitStarter(data)
   
-
+  console.log('Total time: ', (Date.now() - start)/1000 + " seconds")
 })
 
 module.exports = router;

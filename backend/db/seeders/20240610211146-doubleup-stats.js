@@ -14,7 +14,7 @@ module.exports = {
     */
     return queryInterface.bulkInsert('DoubleUpRankings', [
       {
-        id: "WaterS0lid",
+        id: "waters0lid",
         rank: 'SILVER II',
         leaguePoints: 33,
         wins: 7,
@@ -25,7 +25,7 @@ module.exports = {
         hotStreak: false
       },
       {
-        id: "Poopy",
+        id: "poopy",
         rank: 'FAKE I',
         leaguePoints: 33,
         wins: 7,

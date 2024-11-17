@@ -14,7 +14,7 @@ module.exports = {
     */
    return queryInterface.bulkInsert("Summoners", [
     {
-      id: "WaterS0lid",
+      id: "waters0lid",
       level: 524,
       updatedAt: new Date("Thu Jun 06 2024")
     }

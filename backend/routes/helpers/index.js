@@ -142,6 +142,7 @@ async function dbCommitStarter(data) {
       id: data.summoner.name.toLowerCase()
     }
   })
+  console.log(summoner)
   if (summoner) {
     summoner.level = data.summoner.summonerLevel,
     summoner.updatedAt = new Date(data.summoner.revisionDate)
@@ -159,14 +160,19 @@ async function dbCommitStarter(data) {
       
       let rankEntry = await key.findOne({
         where: {
-          id: data.summoner.name
+          id: data.summoner.name.toLowerCase()
         }
       })
       
       if (rankEntry) {
+        // console.log("rankEntry found")
+        // console.log(rankEntry)
+
         for (const row of Object.keys(data.summoner.rankings[rank])) {
+          // console.log(row, data.summoner.rankings[rank][row])
           rankEntry[row] = data.summoner.rankings[rank][row]
         }
+        // console.log(rankEntry)
       } else {
         rankEntry = await key.create({
           id: data.summoner.name,
@@ -175,16 +181,16 @@ async function dbCommitStarter(data) {
 
         let summRanks = await Ranking.findOne({
           where: {
-            summonerId: data.summoner.name
+            summonerId: data.summoner.name.toLowerCase()
           }
         })
 
         if (summRanks) {
-          summRanks.key = data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
+          summRanks.key = data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
         } else {
           Ranking.create({
           summonerId: data.summoner.name,
-          [key]: data.summoner.rankings[rank].rank ? data.summner.rankings[rank].rank : data.summner.rankings[rank].ratedTier
+          [key]: data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
         })
       }
       }
@@ -192,7 +198,7 @@ async function dbCommitStarter(data) {
     })
   } else {
     summoner = await Summoner.create({
-      id: data.summoner.name,
+      id: data.summoner.name.toLowerCase(),
       level: data.summoner.summonerLevel,
       updatedAt: new Date(data.summoner.revisionDate)
     })
@@ -219,7 +225,7 @@ async function dbCommitStarter(data) {
 
       let summRanks = await Ranking.findOne({
         where: {
-          summonerId: data.summoner.name
+          summonerId: data.summoner.name.toLowerCase()
         }
       })
       if (summRanks) {

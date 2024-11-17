@@ -14,14 +14,14 @@ module.exports = {
     */
     return queryInterface.bulkInsert('HyperRollRankings', [
       {
-        id: 'WaterS0lid',
+        id: 'waters0lid',
         ratedTier: 'ORANGE',
         ratedRating: 5220,
         wins: 189,
         losses: 138
       },
       {
-        id: 'Poopy',
+        id: 'poopy',
         ratedTier: 'FAKE',
         ratedRating: 5220,
         wins: 189,

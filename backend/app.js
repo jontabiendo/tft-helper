@@ -62,7 +62,7 @@ const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, par
 async function eagerRankings() {
   const summoner = await Summoner.findOne({
     where: {
-      id: 'WaterS0lid'
+      id: 'waters0lid'
     },
     attributes: ['id', 'updatedAt', 'level'],
     // include: [

@@ -14,10 +14,10 @@ module.exports = {
     */
    return queryInterface.bulkInsert('Rankings', [
     {
-      summonerId: 'WaterS0lid',
-      doubleUpRanking: 'WaterS0lid',
-      hyperRollRanking: 'WaterS0lid',
-      normalRanking: 'WaterS0lid'
+      summonerId: 'waters0lid',
+      doubleUpRanking: 'waters0lid',
+      hyperRollRanking: 'waters0lid',
+      normalRanking: 'waters0lid'
     }
    ])
   },

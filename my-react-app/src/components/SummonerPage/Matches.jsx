@@ -28,9 +28,10 @@ function MatchTile({match}){
           ))}
         </div>
         <div className="match-augments-div">
-          {match.augments.map((augment) => (
+          {/* augment data discontinued as of set 13 */}
+          {match.augments ? (match.augments.map((augment) => (
             <p>{augment.split("_").pop()}</p>
-          ))}
+          ))) : null}
         </div>
         <div className="match-units-div">
           {match.units.map((unit) => (

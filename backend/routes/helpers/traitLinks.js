@@ -17,7 +17,24 @@ const traits = {
   "TFT_Ranger": "https://cdn.lolchess.gg/upload/images/traits/Set5Ranger_black_1727055160-Ranger.svg",
   "TFT5_Inanimate": "https://cdn.lolchess.gg/upload/images/traits/Set5Inanimate_black_1727055029-Inanimate.svg",
   "TFT5_Forgotten": "https://cdn.lolchess.gg/upload/images/traits/Set5Forgotten_black_1727055012-Forgotten.svg",
-  "TFT5_Legionaire": "https://cdn.lolchess.gg/upload/images/traits/Set5Legionnaire_black_1727055083-Legionnaire.svg"
+  "TFT5_Legionaire": "https://cdn.lolchess.gg/upload/images/traits/Set5Legionnaire_black_1727055083-Legionnaire.svg",
+  "TFT13_Hoverboard": "https://cdn.lolchess.gg/upload/images/traits/Firelight_black_1731044903-Firelight.svg",
+  "TFT13_HighRoller": "https://cdn.lolchess.gg/upload/images/traits/HighRoller_black_1731045617-HighRoller.svg",
+  "TFT13_Watcher": 	"https://cdn.lolchess.gg/upload/images/traits/Watcher_black_1731045790-Watcher.svg",
+  "TFT13_Ambassador": "https://cdn.lolchess.gg/upload/images/traits/Emissary_black_1731045378-Emissary.svg",
+  "TFT13_Ambusher": "https://cdn.lolchess.gg/upload/images/traits/Ambusher_black_1731045834-Ambusher.svg",
+  "TFT13_Hextech": "https://cdn.lolchess.gg/upload/images/traits/Automata_black_1731045428-Automata.svg",
+  "TFT13_Sniper": "https://cdn.lolchess.gg/upload/images/traits/Sniper_black_1731045886-Sniper.svg",
+  "TFT13_Rebel": "https://cdn.lolchess.gg/upload/images/traits/Rebel_black_1731044495-Rebel.svg",
+  "TFT13_Scrap": "https://cdn.lolchess.gg/upload/images/traits/Scrap_black_1731044470-Scrap.svg",
+  "TFT13_Squad": "https://cdn.lolchess.gg/upload/images/traits/Enforcer_black_1731045576-Enforcer.svg",
+  "TFT13_Titan": "https://cdn.lolchess.gg/upload/images/traits/Sentinel_black_1731045721-Sentinel.svg",
+  "TFT13_Bruiser": "https://cdn.lolchess.gg/upload/images/traits/Bruiser_black_1731045867-Bruiser.svg",
+  "TFT13_JunkerKing": "https://cdn.lolchess.gg/upload/images/traits/JunkerKing_black_1731045468-junkerKing.svg",
+  "TFT13_FormSwapper": "https://cdn.lolchess.gg/upload/images/traits/FormSwapper_black_1731045938-Swapper.svg",
+  "TFT13_Martialist": "	https://cdn.lolchess.gg/upload/images/traits/Artillerist_black_1731045912-Artillerist.svg",
+  "TFT13_Academy": "	https://cdn.lolchess.gg/upload/images/traits/Acamedy_black_1731045414-Academy.svg",
+  "TFT13_Invoker": "https://cdn.lolchess.gg/upload/images/traits/Visionary_black_1731045850-Visonary.svg"
 }
 
 module.exports = {

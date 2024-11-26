@@ -32,9 +32,14 @@ const traits = {
   "TFT13_Bruiser": "https://cdn.lolchess.gg/upload/images/traits/Bruiser_black_1731045867-Bruiser.svg",
   "TFT13_JunkerKing": "https://cdn.lolchess.gg/upload/images/traits/JunkerKing_black_1731045468-junkerKing.svg",
   "TFT13_FormSwapper": "https://cdn.lolchess.gg/upload/images/traits/FormSwapper_black_1731045938-Swapper.svg",
-  "TFT13_Martialist": "	https://cdn.lolchess.gg/upload/images/traits/Artillerist_black_1731045912-Artillerist.svg",
-  "TFT13_Academy": "	https://cdn.lolchess.gg/upload/images/traits/Acamedy_black_1731045414-Academy.svg",
-  "TFT13_Invoker": "https://cdn.lolchess.gg/upload/images/traits/Visionary_black_1731045850-Visonary.svg"
+  "TFT13_Martialist": "https://cdn.lolchess.gg/upload/images/traits/Artillerist_black_1731045912-Artillerist.svg",
+  "TFT13_Academy": "https://cdn.lolchess.gg/upload/images/traits/Acamedy_black_1731045414-Academy.svg",
+  "TFT13_Invoker": "https://cdn.lolchess.gg/upload/images/traits/Visionary_black_1731045850-Visonary.svg",
+  "TFT13_Family": "https://cdn.lolchess.gg/upload/images/traits/Family_black_1731043808-Family.svg",
+  "TFT13_Pugilist": "https://cdn.lolchess.gg/upload/images/traits/PitFighter_black_1731045747-PitFighter.svg",
+  "TFT13_Warband": "https://cdn.lolchess.gg/upload/images/traits/Conqueror_black_1731045441-Conqueror.svg",
+  "TFT13_Cabal": "https://cdn.lolchess.gg/upload/images/traits/BlackRose_black_1731044449-Blackrose.svg",
+  "TFT13_Experiment": "https://cdn.lolchess.gg/upload/images/traits/Experiment_black_1731045402-Experiment.svg"
 }
 
 module.exports = {

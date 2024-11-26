@@ -1,4 +1,5 @@
 const traits = require('./traitLinks')
+const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
 const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, Participant } = require('../../db/models');
@@ -9,6 +10,14 @@ function assignTraitLinks(traitsList) {
   });
 
   return traitsList
+}
+
+function assignUnitLinks(unitList) {
+  unitList.map(unit => {
+    unit.link = units.units[`${unit.character_id}`]
+  })
+
+  return unitList
 }
 
 function normalizeMatchDataById(match, id, queueId){
@@ -30,6 +39,7 @@ function normalizeMatchDataById(match, id, queueId){
   })
 
   relevantInfo.traits = assignTraitLinks(relevantInfo.traits)
+  relevantInfo.units = assignUnitLinks(relevantInfo.units)
 
   relevantInfo.units = relevantInfo.units.sort((a, b) => {
     if (a.itemNames.length > b.itemNames.length) {

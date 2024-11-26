@@ -68,7 +68,6 @@ function normalizeRankedData(rankings) {
   const res = {};
 
   for (const queue of rankings) {
-    // console.log(queue)
     if (queue.rank) {
       queue.rank = queue.tier + " " + queue.rank
     }
@@ -119,7 +118,6 @@ function normalizeParticipantData(participant) {
 }
 
 async function normalizeDatabaseMatchData(matchData) {
-  // console.log(matchData)
   matchData.id = matchData.metadata.match_id
   matchData.patch = Number(matchData.info.game_version.slice(-6, matchData.info.game_version.length - 1))
   
@@ -136,7 +134,6 @@ async function normalizeDatabaseMatchData(matchData) {
 
   matchData = {...matchData, ...matchData.info}
   delete matchData.info
-  // console.log(matchData)
 
   matchData.participants = await Promise.all(matchData.participants.map(match => normalizeParticipantData(match)))
   
@@ -167,7 +164,6 @@ async function dbCommitStarter(data) {
         key = HyperRollRanking
       }
 
-      
       let rankEntry = await key.findOne({
         where: {
           id: data.summoner.name.toLowerCase()
@@ -175,34 +171,16 @@ async function dbCommitStarter(data) {
       })
       
       if (rankEntry) {
-        // console.log("rankEntry found")
-        // console.log(rankEntry)
 
         for (const row of Object.keys(data.summoner.rankings[rank])) {
-          // console.log(row, data.summoner.rankings[rank][row])
+          console.log(row, data.summoner.rankings[rank][row])
           rankEntry[row] = data.summoner.rankings[rank][row]
         }
-        // console.log(rankEntry)
       } else {
         rankEntry = await key.create({
-          id: data.summoner.name,
+          id: data.summoner.name.toLowerCase(),
           ...data.summoner.rankings[rank]
         })
-
-        let summRanks = await Ranking.findOne({
-          where: {
-            summonerId: data.summoner.name.toLowerCase()
-          }
-        })
-
-        if (summRanks) {
-          summRanks.key = data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
-        } else {
-          Ranking.create({
-          summonerId: data.summoner.name,
-          [key]: data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
-        })
-      }
       }
       rankEntry.save()
     })
@@ -212,6 +190,14 @@ async function dbCommitStarter(data) {
       level: data.summoner.summonerLevel,
       updatedAt: new Date(data.summoner.revisionDate)
     })
+
+    const ranking = await Ranking.create({
+      summonerId: data.summoner.name.toLowerCase(),
+      doubleUpRanking: data.summoner.name.toLowerCase(),
+      normalRanking: data.summoner.name.toLowerCase(),
+      hyperRollRanking: data.summoner.name.toLowerCase()
+    })
+    ranking.save()
 
     let promiseRes = Object.keys(data.summoner.rankings).forEach(async (rank) => {
       let key;
@@ -228,31 +214,11 @@ async function dbCommitStarter(data) {
       }
 
       let entry =  await key.create({
-        id: data.summoner.name,
+        id: data.summoner.name.toLowerCase(),
         ...data.summoner.rankings[rank]
       })
       entry.save()
-
-      let summRanks = await Ranking.findOne({
-        where: {
-          summonerId: data.summoner.name.toLowerCase()
-        }
-      })
-      if (summRanks) {
-        summRanks.key = data.summoner.rankings[rank].rank ? data.summoner.rankings[rank].rank : data.summoner.rankings[rank].ratedTier
-      } else {
-        summRanks = await Ranking.create({
-          summonerId: data.summoner.name,
-          [keyString]: data.summoner.name
-        })
-      }
-
-      summRanks.save()
-
-      return summRanks
     })
-
-    // console.log(promiseRes)
   }
 
   summoner.save()

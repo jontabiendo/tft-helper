@@ -39,7 +39,9 @@ const traits = {
   "TFT13_Pugilist": "https://cdn.lolchess.gg/upload/images/traits/PitFighter_black_1731045747-PitFighter.svg",
   "TFT13_Warband": "https://cdn.lolchess.gg/upload/images/traits/Conqueror_black_1731045441-Conqueror.svg",
   "TFT13_Cabal": "https://cdn.lolchess.gg/upload/images/traits/BlackRose_black_1731044449-Blackrose.svg",
-  "TFT13_Experiment": "https://cdn.lolchess.gg/upload/images/traits/Experiment_black_1731045402-Experiment.svg"
+  "TFT13_Experiment": "https://cdn.lolchess.gg/upload/images/traits/Experiment_black_1731045402-Experiment.svg",
+  "TFT13_Sorcerer": "	https://cdn.lolchess.gg/upload/images/traits/Sorcerer_black_1731045823-Sorcerer.svg",
+  "TFT13_Teamup_Geniuses": "https://cdn.lolchess.gg/upload/images/traits/Geniuses_black_1731912519-Geniuses.svg"
 }
 
 module.exports = {

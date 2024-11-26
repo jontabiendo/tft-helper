@@ -27,7 +27,17 @@ const units = {
   "TFT13_Trundle": "https://cdn.lolchess.gg/upload/images/champions/Trundle_1731058338-Trundle.png",
   "TFT13_Fish": "https://cdn.lolchess.gg/upload/images/champions/Steb_1731058204-Steb.jpg",
   "TFT13_Shooter": "https://cdn.lolchess.gg/upload/images/champions/Maddie_1731058145-Maddie.jpg",
-  
+  "TFT13_Zoe": "https://cdn.lolchess.gg/upload/images/champions/Zoe_1731058401-Zoe.png",
+  "TFT13_Nami": "https://cdn.lolchess.gg/upload/images/champions/Nami_1731058255-Nami.png",
+  "TFT13_Akali": "https://cdn.lolchess.gg/upload/images/champions/Akali_1731058073-Akali.png",
+  "TFT13_Ezreal": "https://cdn.lolchess.gg/upload/images/champions/Ezreal_1731058160-Ezreal.png",
+  "TFT13_FlyGuy": "https://cdn.lolchess.gg/upload/images/champions/Scar_1731058197-Scar.jpg",
+  "tft13_swain": "https://cdn.lolchess.gg/upload/images/champions/Swain_1731058325-Swain.png",
+  "TFT13_Urgot": "https://cdn.lolchess.gg/upload/images/champions/Urgot_1731058357-Urgot.png",
+  "TFT13_Beardy": "https://cdn.lolchess.gg/upload/images/champions/Loris_1731058129-Loris.jpg",
+  "TFT13_Zeri": "https://cdn.lolchess.gg/upload/images/champions/Zeri_1731058388-Zeri.png",
+  "TFT13_Ambessa": "https://cdn.lolchess.gg/upload/images/champions/Ambessa_1731058093-Ambessa.png",
+  "TFT13_Camille": "https://cdn.lolchess.gg/upload/images/champions/Camille_1731058112-Camille.png"
 }
 
 module.exports = {

@@ -23,6 +23,10 @@ module.exports = {
       set_core_name: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
       }
     });
   },

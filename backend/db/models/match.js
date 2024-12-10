@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 module.exports = (sequelize, DataTypes) => {
   class Match extends Model {
     /**
@@ -28,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     tft_set: DataTypes.INTEGER,
     game_type: DataTypes.STRING,
     queue_id: DataTypes.INTEGER,
-    set_core_name: DataTypes.STRING
+    set_core_name: DataTypes.STRING,
+    createdAt: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'Match',

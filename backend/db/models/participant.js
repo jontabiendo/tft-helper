@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
   Participant.init({
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     goldLeft: DataTypes.INTEGER,
     lastRound: DataTypes.INTEGER,
@@ -31,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     playersEliminated: DataTypes.INTEGER,
     totalDamageToPlayers: DataTypes.INTEGER,
     summonerId: DataTypes.STRING,
-    augments: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'participant',

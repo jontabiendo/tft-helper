@@ -10,16 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       matchId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       participant: {
         type: Sequelize.INTEGER
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

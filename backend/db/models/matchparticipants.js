@@ -20,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   MatchParticipants.init({
-    matchId: DataTypes.INTEGER,
-    participant: DataTypes.INTEGER
+    matchId: DataTypes.STRING,
+    participant: DataTypes.INTEGER,
+    createdAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'MatchParticipants',

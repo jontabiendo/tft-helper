@@ -33,10 +33,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      augments: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       summonerId: {
         type: Sequelize.STRING,
         allowNull: false,

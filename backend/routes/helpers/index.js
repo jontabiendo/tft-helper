@@ -2,7 +2,7 @@ const traits = require('./traitLinks')
 const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, Participant } = require('../../db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -125,7 +125,6 @@ async function normalizeDatabaseMatchData(matchData) {
   delete matchData.info.endOfGameResult
   delete matchData.info.gameCreation
   delete matchData.info.gameId
-  delete matchData.info.game_datetime
   delete matchData.info.game_length
   delete matchData.info.mapId
   delete matchData.info.tft_set_core_name
@@ -141,8 +140,8 @@ async function normalizeDatabaseMatchData(matchData) {
 }
 
 async function dbCommitStarter(data) {
-  console.log('Starting commit to db...')
-  console.log(data.summoner.rankings)
+  // console.log('Starting commit to db...')
+  // console.log(data.summoner.rankings)
 
   let summoner = await Summoner.findOne({
     where: {
@@ -173,7 +172,7 @@ async function dbCommitStarter(data) {
       if (rankEntry) {
 
         for (const row of Object.keys(data.summoner.rankings[rank])) {
-          console.log(row, data.summoner.rankings[rank][row])
+          // console.log(row, data.summoner.rankings[rank][row])
           rankEntry[row] = data.summoner.rankings[rank][row]
         }
       } else {
@@ -222,12 +221,57 @@ async function dbCommitStarter(data) {
   }
 
   summoner.save()
+}
 
+async function commitMatches(matches) {
+  console.log("STARTING MATCHES COMMIT")
+  for (const match of matches) {
+    let dbMatch = await Match.findOne({
+      where: {
+        id: match.id
+      }
+    })
+
+    if (!dbMatch) {
+      const newMatch = await Match.create({
+        id: match.id,
+        tft_set: match.tft_set_number,
+        game_type: match.tft_game_type,
+        queue_id: match.queueId,
+        set_core_name: "INTO THE ARCANE",
+        createdAt: match.game_datetime
+      })
+      console.log(await newMatch)
+      for (const matchParticipant of match.participants) {
+        const newParticipant = await participant.create({
+          goldLeft: matchParticipant.gold_left,
+          lastRound: matchParticipant.last_round,
+          level: matchParticipant.level,
+          placement: matchParticipant.placement,
+          playersEliminated: matchParticipant.players_eliminated,
+          totalDamageToPlayers: matchParticipant.total_damage_to_players,
+          summonerId: matchParticipant.riotIdGameName,
+        })
+        console.log(await newParticipant)
+
+        // console.log("CREATING MATCH PARTICIPANT", new Date(match.game_datetime))
+
+        const newMP = await MatchParticipants.create({
+          matchId: match.id,
+          participant: await newParticipant.id,
+          createdAt: new Date(match.game_datetime)
+        })
+
+        // console.log(await newMP)
+      }
+    }
+  }
 }
 
 module.exports = {
   normalizeMatchDataById,
   normalizeRankedData,
   normalizeDatabaseMatchData,
-  dbCommitStarter
+  dbCommitStarter,
+  commitMatches
 }

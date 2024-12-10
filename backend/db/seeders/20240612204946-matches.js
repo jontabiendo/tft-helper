@@ -20,7 +20,6 @@ module.exports = {
       placement: 1,
       playersEliminated: 1,
       totalDamageToPlayers: 32,
-      augments: "TFT11_Augment_DragonlordCrest,TFT7_Augment_BandOfThieves1,TFT11_Augment_HeavenlyCrest",
       summonerId: "waters0lid"
     },
     {
@@ -30,7 +29,6 @@ module.exports = {
       placement: 2,
       playersEliminated: 2,
       totalDamageToPlayers: 26,
-      augments: "TFT11_Augment_WanderingTrainerGold,TFT9_Augment_PandorasRadiantBox,TFT9_Augment_JeweledLotus",
       summonerId: "waters0lid"
     },
     {
@@ -40,7 +38,6 @@ module.exports = {
       placement: 3,
       playersEliminated: 1,
       totalDamageToPlayers: 26,
-      augments: "TFT11_Augment_Invoker,TFT9_Augment_HealingOrbsI,TFT11_Augment_Reinfourcement",
       summonerId: "waters0lid"
     },
     {
@@ -50,7 +47,6 @@ module.exports = {
       placement: 2,
       playersEliminated: 1,
       totalDamageToPlayers: 30,
-      augments: "TFT9_Augment_Commander_Ascension,TFT11_Augment_AltruistCrown,TFT10_Augment_CrashTestDummies",
       summonerId: "waters0lid"
     },
     {
@@ -60,7 +56,6 @@ module.exports = {
       placement: 3,
       playersEliminated: 1,
       totalDamageToPlayers: 26,
-      augments: "TFT7_Augment_BestFriends1,TFT11_Augment_GoldenRemover,TFT11_Augment_RadiantRefactor",
       summonerId: "waters0lid"
     },
     {
@@ -70,7 +65,6 @@ module.exports = {
       placement: 8,
       playersEliminated: 0,
       totalDamageToPlayers: 0,
-      augments: "TFT9_Augment_WanderingTrainer,TFT9_Augment_PandorasItems2,TFT9_Augment_OldMansWalkingStick",
       summonerId: "waters0lid"
     },
     {
@@ -80,7 +74,6 @@ module.exports = {
       placement: 5,
       playersEliminated: 0,
       totalDamageToPlayers: 18,
-      augments: "TFT11_Augment_ArcanistCrown,TFT6_Augment_GachaAddict,TFT11_Augment_PorcelainCrown",
       summonerId: "waters0lid"
     },
     {
@@ -90,7 +83,6 @@ module.exports = {
       placement: 3,
       playersEliminated: 1,
       totalDamageToPlayers: 32,
-      augments: "TFT7_Augment_BestFriends2,TFT7_Augment_BestFriends1,TFT11_Augment_DryadCrest",
       summonerId: "waters0lid"
     },
     {
@@ -100,7 +92,6 @@ module.exports = {
       placement: 4,
       playersEliminated: 0,
       totalDamageToPlayers: 121,
-      augments: "TFT11_Augment_Trickshot,TFT9_Augment_SupportCache,TFT11_Augment_DynamicDuo",
       summonerId: "waters0lid"
     },
     {
@@ -110,7 +101,6 @@ module.exports = {
       placement: 7,
       playersEliminated: 0,
       totalDamageToPlayers: 63,
-      augments: "TFT10_Augment_GoingLong,TFT6_Augment_ForceOfNature,TFT6_Augment_TheGoldenEgg",
       summonerId: "waters0lid"
     }
    ])

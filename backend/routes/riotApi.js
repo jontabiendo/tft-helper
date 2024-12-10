@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const { normalizeMatchDataById, normalizeRankedData, normalizeDatabaseMatchData, dbCommitStarter } = require('./helpers');
+const { normalizeMatchDataById, normalizeRankedData, normalizeDatabaseMatchData, dbCommitStarter, commitMatches } = require('./helpers');
 const router = express.Router();
 
 const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, Participant } = require('../db/models')
@@ -81,7 +81,9 @@ router.get('/:summoner', async function(req, res, next) {
   const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
 
   // console.log(data.summoner)
-  dbCommitStarter(data)
+  dbCommitStarter(data).then(() => {
+    commitMatches(dbData)
+  })
   
   console.log('Total time: ', (Date.now() - start)/1000 + " seconds")
 })

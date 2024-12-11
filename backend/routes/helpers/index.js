@@ -2,7 +2,7 @@ const traits = require('./traitLinks')
 const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant } = require('../../db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -250,7 +250,7 @@ async function commitMatches(matches) {
           placement: matchParticipant.placement,
           playersEliminated: matchParticipant.players_eliminated,
           totalDamageToPlayers: matchParticipant.total_damage_to_players,
-          summonerId: matchParticipant.riotIdGameName,
+          summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
         })
         console.log(await newParticipant)
 
@@ -262,7 +262,13 @@ async function commitMatches(matches) {
           createdAt: new Date(match.game_datetime)
         })
 
-        // console.log(await newMP)
+        const newSM = await SummonerMatches.create({
+          matchId: match.id,
+          summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
+          createdAt: new Date(match.game_datetime)
+        })
+
+        console.log(await newSM)
       }
     }
   }

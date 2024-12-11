@@ -15,8 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       Match.hasOne(models.MatchParticipants, {
         foreignKey: 'matchId'
       })
-      Match.hasMany(models.SummonerMatches, {
-        foreignKey: 'matchId',
+      // Match.hasMany(models.SummonerMatches, {
+      //   foreignKey: 'matchId',
+      // })
+      Match.belongsToMany(models.Summoner, {
+        through: models.SummonerMatches,
       })
     }
   }

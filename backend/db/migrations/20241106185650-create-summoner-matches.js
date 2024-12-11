@@ -10,16 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       matchId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       summonerId: {
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

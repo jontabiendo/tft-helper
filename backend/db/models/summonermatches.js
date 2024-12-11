@@ -10,18 +10,31 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      SummonerMatches.belongsTo(models.Summoner, {
-        foreignKey: "id"
-      })
-      SummonerMatches.belongsTo(models.Match, {
-        foreignKey: "id"
-      })
+      // // define association here
+      // SummonerMatches.belongsTo(models.Summoner, {
+      //   foreignKey: "id"
+      // })
+      // SummonerMatches.belongsTo(models.Match, {
+      //   foreignKey: "id"
+      // })
     }
   }
   SummonerMatches.init({
-    matchId: DataTypes.INTEGER,
-    summonerId: DataTypes.STRING
+    matchId: {
+      type: DataTypes.STRING,
+      references: {
+        model: "Matches",
+        key: 'id'
+      }
+    },
+    summonerId: {
+      type: DataTypes.STRING,
+      references: {
+        model: "Summoner",
+        key: 'id'
+      }
+    },
+    createdAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'SummonerMatches',

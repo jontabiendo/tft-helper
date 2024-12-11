@@ -72,40 +72,54 @@ async function eagerRankings() {
     // ]
     include: [
       { 
-      model: Ranking,
-      include: [
-        {
-          model: NormalRanking,
-        },
-        {
-          model: DoubleUpRanking,
-        },
-        {
-          model: HyperRollRanking,
-        }
-      ]
-    },
-    {
-      model: SummonerMatches,
-      include: [
-        {
-          model: Match,
-          include: [
-            {
-              model: MatchParticipants,
-              include: [
-                {
-                  model: participant
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+        model: Ranking,
+        include: [
+          {
+            model: NormalRanking,
+          },
+          {
+            model: DoubleUpRanking,
+          },
+          {
+            model: HyperRollRanking,
+          }
+        ]
+      },
+      {
+        model: Match,
+        include: [
+          {
+            model: MatchParticipants,
+            include: [
+              {
+                model: participant
+              }
+            ]
+          }
+        ]
+      }
+    //   {
+    //     model: SummonerMatches,
+    //     include: [
+    //       {
+    //         model: Match,
+    //         include: [
+    //           {
+    //             model: MatchParticipants,
+    //             include: [
+    //               {
+    //                 model: participant
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       }
+    //   ]
+    // }
   ]
   })
-  console.log("thing: ", await summoner.toJSON())
+  const obj = summoner.toJSON()
+  console.log("thing: ", obj.Matches[0])
   return await summoner
 }
 console.log(eagerRankings())

@@ -3,6 +3,7 @@
 const {
   Model
 } = require('sequelize');
+const summonermatches = require('./summonermatches');
 module.exports = (sequelize, DataTypes) => {
   class Summoner extends Model {
     /**
@@ -18,8 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       Summoner.hasMany(models.participant, {
         foreignKey: 'summonerId',
       })
-      Summoner.hasMany(models.SummonerMatches, {
-        foreignKey: 'summonerId'
+      // Summoner.hasMany(models.SummonerMatches, {
+      //   foreignKey: 'summonerId'
+      // })
+      Summoner.belongsToMany(models.Match, {
+        through: models.SummonerMatches,
       })
     }
   }

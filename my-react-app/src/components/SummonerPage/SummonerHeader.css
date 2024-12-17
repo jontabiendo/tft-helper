@@ -162,11 +162,18 @@
 }
 
 .unit-8-tile-div > p {
-  color: #C89B3C;
+  /* color: linear-gradient(45deg, aqua, violet); */
+  background-clip: text;
+  color: transparent; 
+  background-image: linear-gradient(to left top, aqua ,  violet );
+  background-size: 25% 70%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .unit-8-tile-div > img {
-  border: 1px solid #C89B3C;
+  border: 1px solid transparent;
+  background: linear-gradient(45deg, aqua, violet);
   width: 100%;
 }
 

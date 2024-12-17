@@ -2,6 +2,7 @@ const units = {
   "TFT13_Red": "https://cdn.lolchess.gg/upload/images/champions/Violet_1731058155-Violet.jpg",
   "TFT13_Lieutenant": "https://cdn.lolchess.gg/upload/images/champions/Sevika_1731058172-Sevika.jpg",
   "TFT13_Jinx": "https://cdn.lolchess.gg/upload/images/champions/Jinx_1731058201-Jinx.png",
+  "tft13_jinx": "https://cdn.lolchess.gg/upload/images/champions/Jinx_1731058201-Jinx.png",
   "TFT13_Garen": "https://cdn.lolchess.gg/upload/images/champions/Garen_1731058172-Garen.png",
   "TFT13_Vi": "	https://cdn.lolchess.gg/upload/images/champions/Vi_1731058374-Vi.png",
   "TFT13_Prime": "https://cdn.lolchess.gg/upload/images/champions/Vander_1731058270-Vander.jpg",
@@ -61,8 +62,10 @@ const units = {
   "TFT13_Nocturne": "https://cdn.lolchess.gg/upload/images/champions/Nocturne_1731058109-Nocturne.jpg",
   "TFT13_TwistedFate": "https://cdn.lolchess.gg/upload/images/champions/TwistedFate_1731058344-TwistedFate.png",
   "TFT13_Singed": "https://cdn.lolchess.gg/upload/images/champions/Singed_1731058314-Singed.png",
-  "TFT13_Vex": "https://cdn.lolchess.gg/upload/images/champions/Vex_1731058367-Vex.png"
-
+  "TFT13_Vex": "https://cdn.lolchess.gg/upload/images/champions/Vex_1731058367-Vex.png",
+  "TFT13_Warwick": "https://cdn.lolchess.gg/upload/images/champions/Warwick_1732677801-tft13_warwick_square.tft_set13_evolved.png",
+  "TFT13_MissMage": "https://cdn.lolchess.gg/upload/images/champions/Mel_1732679266-tft13_missmage_square.tft_set13_evolved.png",
+  "TFT13_Viktor": "https://cdn.lolchess.gg/upload/images/champions/Viktor_1732679470-tft13_viktor_square.tft_set13_evolved.png"
 }
 
 module.exports = {

@@ -272,7 +272,7 @@ async function commitMatches(matches) {
           summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
         })
 
-        await commitParticipantUnits(matchParticipant.units)
+        // await commitParticipantUnits(matchParticipant.units)
 
         const newMP = await MatchParticipants.create({
           matchId: match.id,

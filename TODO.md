@@ -23,3 +23,6 @@ Test faster implementation of promise.all:
 
 Redo return of fetch to also calculate top trending data
 
+***
+Add trait seeders to db
+***

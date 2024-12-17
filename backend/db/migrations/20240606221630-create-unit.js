@@ -6,9 +6,11 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
       },
       name: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
       },
       tier: {

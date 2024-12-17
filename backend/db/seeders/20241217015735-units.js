@@ -17,9 +17,43 @@ module.exports = {
     const threeCosts = ["TFT13_Gangplank", "TFT13_NunuWillump", "TFT13_Chainsaw", "TFT13_Nami", "TFT13_TwistedFate", "TFT13_Ezreal", "TFT13_Swain", "tft13_swain", "TFT13_Ambessa", "TFT13_Beardy", "TFT13_FlyGuy", "TFT13_Cassiopeia", "TFT13_Blitzcrank", "TFT13_KogMaw", "TFT13_Gremlin"];
     const fourCosts = ["TFT13_Garen", "TFT13_Vi", "TFT13_Heimerdinger", "TFT13_Illaoi", "TFT13_Ekko", "TFT13_Zoe", "TFT13_Twitch", "TFT13_DrMundo", "TFT13_Elise", "tft13_elise", "TFT13_Corki", "TFT13_Silco"];
     const fiveCosts = ["TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Sion", "TFT13_Rumble", "TFT13_Caitlyn", "TFT13_Jayce", "TFT13_LeBlanc", "TFT13_Malzahar", "TFT13_Mordekaiser", ];
-    const sixCosts = [];
+    const sixCosts = ["TFT13_Warwick", "TFT13_MissMage", "TFT13_Viktor"];
+    
+    const allUnits = [oneCosts, twoCosts, threeCosts, fourCosts, fiveCosts, sixCosts];
+    
+    for (let i = 0; i < allUnits.length; i++) {
+        const tierUnits = []
+      for (let k = 0; k < allUnits[i].length; k++) {
+        const name = allUnits[i][k]
+        let unit = []
+        let rarity;
+        
+        if (i === 5) {
+            rarity = 8
+        } else if (i === 4) {
+            rarity = 6
+        } else if (i === 3) {
+            rarity = 4
+        } else {
+            rarity = i
+        }
+    
+        for (let j = 1; j < 5; j++) {
+          unit.push(
+            {
+              name,
+              tier: j,
+              rarity
+            }
+          )
+        }
+    
+        tierUnits.push(unit)
+      }
+      allUnits[i] = tierUnits
+    }
 
-    return queryInterface.bulkInsert('Rankings', [...oneCosts, ...twoCosts, ...threeCosts, ...fourCosts, ...fiveCosts, ...sixCosts].flat())
+    return queryInterface.bulkInsert('Units', allUnits.flat(Infinity))
   },
 
   async down (queryInterface, Sequelize) {
@@ -29,5 +63,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    return queryInterface.bulkDelete("Units", null, {})
   }
 };

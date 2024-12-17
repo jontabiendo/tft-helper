@@ -4,12 +4,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Units', {
       id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
-      itemNames: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      name: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       tier: {
         type: Sequelize.INTEGER,

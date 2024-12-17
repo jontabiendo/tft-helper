@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Unit.init({
     id: {
-      type: DataTypes.STRING,
-      primaryKey: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    itemNames: DataTypes.STRING,
+    name: DataTypes.STRING,
     tier: DataTypes.INTEGER,
     rarity: DataTypes.INTEGER
   }, {

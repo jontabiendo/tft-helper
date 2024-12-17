@@ -59,7 +59,9 @@ const units = {
   "TFT13_Amumu": "https://cdn.lolchess.gg/upload/images/champions/Amumu_1731058082-Amumu.png",
   "TFT13_Irelia": "https://cdn.lolchess.gg/upload/images/champions/Irelia_1731058189-Irelia.png",
   "TFT13_Nocturne": "https://cdn.lolchess.gg/upload/images/champions/Nocturne_1731058109-Nocturne.jpg",
-  "TFT13_TwistedFate": "https://cdn.lolchess.gg/upload/images/champions/TwistedFate_1731058344-TwistedFate.png"
+  "TFT13_TwistedFate": "https://cdn.lolchess.gg/upload/images/champions/TwistedFate_1731058344-TwistedFate.png",
+  "TFT13_Singed": "https://cdn.lolchess.gg/upload/images/champions/Singed_1731058314-Singed.png",
+  "TFT13_Vex": "https://cdn.lolchess.gg/upload/images/champions/Vex_1731058367-Vex.png"
 
 }
 

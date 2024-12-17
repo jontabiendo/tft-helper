@@ -119,7 +119,7 @@ async function eagerRankings() {
   ]
   })
   const obj = summoner.toJSON()
-  console.log("thing: ", obj.Matches[0])
+  console.log("thing: ", await obj.Matches[0])
   return await summoner
 }
 console.log(eagerRankings())

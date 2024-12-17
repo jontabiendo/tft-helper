@@ -2,7 +2,7 @@ const traits = require('./traitLinks')
 const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches } = require('../../db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches, Unit, Trait } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -223,6 +223,25 @@ async function dbCommitStarter(data) {
   summoner.save()
 }
 
+async function commitUnit(u) {
+    const newU = await Unit.findOrCreate({
+      where: {
+        name: u.character_id,
+        rarity: u.rarity,
+        tier: u.tier
+      },
+      defaults: {
+        name: u.character_id,
+        rarity: u.rarity,
+        tier: u.tier
+      }
+    })
+
+    // console.log("new Unit: ", await newU)
+
+    return await newU
+}
+
 async function commitMatches(matches) {
   console.log("STARTING MATCHES COMMIT")
   for (const match of matches) {
@@ -252,9 +271,8 @@ async function commitMatches(matches) {
           totalDamageToPlayers: matchParticipant.total_damage_to_players,
           summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
         })
-        console.log(await newParticipant)
 
-        // console.log("CREATING MATCH PARTICIPANT", new Date(match.game_datetime))
+        await commitParticipantUnits(matchParticipant.units)
 
         const newMP = await MatchParticipants.create({
           matchId: match.id,
@@ -267,8 +285,6 @@ async function commitMatches(matches) {
           summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
           createdAt: new Date(match.game_datetime)
         })
-
-        console.log(await newSM)
       }
     }
   }

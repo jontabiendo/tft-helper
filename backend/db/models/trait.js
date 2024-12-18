@@ -19,10 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     name: DataTypes.STRING,
-    tierTotal: DataTypes.INTEGER,
-    tierCurrent: DataTypes.INTEGER,
-    style: DataTypes.INTEGER,
-    numUnits: DataTypes.INTEGER
+    tier_total: DataTypes.INTEGER,
+    tier_current: DataTypes.INTEGER,
+    style: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Trait',

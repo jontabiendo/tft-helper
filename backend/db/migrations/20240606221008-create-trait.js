@@ -22,10 +22,6 @@ module.exports = {
       style: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      numUnits: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       }
     });
   },

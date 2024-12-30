@@ -6,16 +6,18 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      tierTotal: {
+      tier_total: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      tierCurrent: {
+      tier_current: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

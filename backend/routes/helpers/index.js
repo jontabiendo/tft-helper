@@ -2,7 +2,7 @@ const traits = require('./traitLinks')
 const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches, Unit, Trait } = require('../../db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches, Unit, Trait, ParticipantUnit, ParticipantTrait } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -29,9 +29,9 @@ function normalizeMatchDataById(match, id, queueId){
   delete relevantInfo.puuid
 
   relevantInfo.traits = relevantInfo.traits.filter(trait => trait.tier_current > 0).sort((a, b) => {
-    if (a.style> b.style) {
+    if (a.style === 3 || (a.style !== 3 && a.style > b.style)) {
       return - 1
-    } else if (a.style < b.style) {
+    } else if ((a.style < b.style && b.style !== 3) || b.style === 3) {
       return 1
     } else {
       return 0
@@ -223,23 +223,54 @@ async function dbCommitStarter(data) {
   summoner.save()
 }
 
-async function commitUnit(u) {
-    const newU = await Unit.findOrCreate({
+async function commitUnit(unit, participantId) {
+    const unitEntry = await Unit.find({
       where: {
-        name: u.character_id,
-        rarity: u.rarity,
-        tier: u.tier
-      },
-      defaults: {
-        name: u.character_id,
-        rarity: u.rarity,
-        tier: u.tier
+        name: unit.character_id,
+        rarity: unit.rarity,
+        tier: unit.tier
       }
+    })
+
+    const newUnitEntry = await ParticipantUnit.create({
+      participantId: participantId,
+      unitId: unitEntry.id
     })
 
     // console.log("new Unit: ", await newU)
 
-    return await newU
+    return await newUnitEntry
+}
+
+async function commitParticipantUnits(units, participantId) {
+  return await Promise.all([...units.map(async (unit) => {
+    return await commitUnit(unit, participantId)
+  })])
+}
+
+async function commitTrait(trait, participantId) {
+  const traitEntry = await Trait.find({
+    where: {
+      name: trait.character_id,
+      rarity: trait.rarity,
+      tier: trait.tier
+    }
+  })
+
+  const newTraitEntry = await ParticipantUnit.create({
+    participantId: participantId,
+    unitId: traitEntry.id
+  })
+
+  // console.log("new Unit: ", await newU)
+
+  return await newTraitEntry
+}
+
+async function commitParticipantTraits(traits, participantId) {
+return await Promise.all([...traits.map(async (trait) => {
+  return await commitTrait(trait, participantId)
+})])
 }
 
 async function commitMatches(matches) {
@@ -272,7 +303,9 @@ async function commitMatches(matches) {
           summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
         })
 
-        // await commitParticipantUnits(matchParticipant.units)
+        await commitParticipantUnits(matchParticipant.units, matchParticipant.id)
+
+        await commitParticipantTraits(matchParticipant.traits, matchParticipant.id)
 
         const newMP = await MatchParticipants.create({
           matchId: match.id,

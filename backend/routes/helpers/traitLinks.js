@@ -45,7 +45,8 @@ const traits = {
   "TFT13_Infused": "https://cdn.lolchess.gg/upload/images/traits/Dominator_black_1731045899-Dominator.svg",
   "TFT13_Teamup_UnlikelyDuo": "https://cdn.lolchess.gg/upload/images/traits/UnlikelyDuo_black_1731912448-Unlikely%20Duo.svg",
   "TFT13_Challenger": "https://cdn.lolchess.gg/upload/images/traits/Quickstriker_black_1731045806-QuickStriker.svg",
-  
+  "TFT13_Crime": "https://cdn.lolchess.gg/upload/images/traits/ChemBaron_black_1731045675-ChemBaron.svg",
+  "TFT13_MissMageTrait": "https://cdn.lolchess.gg/upload/images/traits/BanishedMage_black_1732695186-banishedmage.svg"
 }
 
 module.exports = {

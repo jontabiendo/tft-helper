@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const trait = require('./trait');
 module.exports = (sequelize, DataTypes) => {
   class Participant extends Model {
     /**
@@ -16,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       })
       Participant.belongsTo(models.Summoner, {
         foreignKey: 'id'
+      })
+      Participant.belongsToMany(models.Trait, {
+        through: models.ParticipantTrait
+      })
+      Participant.belongsToMany(models.Unit, {
+        through: models.ParticipantUnit
       })
     }
   }

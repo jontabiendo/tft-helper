@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const participant = require('./participant');
 module.exports = (sequelize, DataTypes) => {
   class Unit extends Model {
     /**
@@ -11,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Unit.belongsToMany(models.participant, {
+        through: models.ParticipantUnit
+      })
     }
   }
   Unit.init({

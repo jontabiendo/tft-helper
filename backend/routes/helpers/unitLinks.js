@@ -65,7 +65,8 @@ const units = {
   "TFT13_Vex": "https://cdn.lolchess.gg/upload/images/champions/Vex_1731058367-Vex.png",
   "TFT13_Warwick": "https://cdn.lolchess.gg/upload/images/champions/Warwick_1732677801-tft13_warwick_square.tft_set13_evolved.png",
   "TFT13_MissMage": "https://cdn.lolchess.gg/upload/images/champions/Mel_1732679266-tft13_missmage_square.tft_set13_evolved.png",
-  "TFT13_Viktor": "https://cdn.lolchess.gg/upload/images/champions/Viktor_1732679470-tft13_viktor_square.tft_set13_evolved.png"
+  "TFT13_Viktor": "https://cdn.lolchess.gg/upload/images/champions/Viktor_1732679470-tft13_viktor_square.tft_set13_evolved.png",
+  "TFT13_BloodHunter": "https://cdn.lolchess.gg/upload/images/traits/BloodHunter_black_1732695201-bloodhunter.svg"
 }
 
 module.exports = {

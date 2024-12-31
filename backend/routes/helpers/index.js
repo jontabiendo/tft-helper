@@ -140,8 +140,9 @@ async function normalizeDatabaseMatchData(matchData) {
 }
 
 async function dbCommitStarter(data) {
-  // console.log('Starting commit to db...')
+  console.log('Starting commit to db...')
   // console.log(data.summoner.rankings)
+  console.log(data)
 
   let summoner = await Summoner.findOne({
     where: {
@@ -224,22 +225,31 @@ async function dbCommitStarter(data) {
 }
 
 async function commitUnit(unit, participantId) {
-    const unitEntry = await Unit.find({
+  console.log(unit)
+  if (unit.character_id.toLowerCase() === "tft13_jaycesummon") {
+    return
+  }
+  
+    const unitEntry = await Unit.findOne({
       where: {
-        name: unit.character_id,
+        name: unit.character_id.toLowerCase(),
         rarity: unit.rarity,
         tier: unit.tier
       }
     })
-
     const newUnitEntry = await ParticipantUnit.create({
       participantId: participantId,
-      unitId: unitEntry.id
+      unitId: await unitEntry.id
     })
-
-    // console.log("new Unit: ", await newU)
-
+    // console.log(unit, unitEntry)
+  
+  
+    await newUnitEntry.save()
+  
+    // console.log("new Unit: ", await newUnitEntry)
+  
     return await newUnitEntry
+
 }
 
 async function commitParticipantUnits(units, participantId) {
@@ -249,18 +259,22 @@ async function commitParticipantUnits(units, participantId) {
 }
 
 async function commitTrait(trait, participantId) {
-  const traitEntry = await Trait.find({
+  const traitEntry = await Trait.findOne({
     where: {
-      name: trait.character_id,
-      rarity: trait.rarity,
-      tier: trait.tier
+      name: trait.name.toLowerCase(),
+      tier_total: trait.tier_total,
+      tier_current: trait.tier_current,
     }
   })
 
-  const newTraitEntry = await ParticipantUnit.create({
+  const newTraitEntry = await ParticipantTrait.create({
     participantId: participantId,
-    unitId: traitEntry.id
+    traitId: await traitEntry.id
   })
+
+  await newTraitEntry.save()
+
+  console.log(newTraitEntry)
 
   // console.log("new Unit: ", await newU)
 
@@ -268,9 +282,13 @@ async function commitTrait(trait, participantId) {
 }
 
 async function commitParticipantTraits(traits, participantId) {
-return await Promise.all([...traits.map(async (trait) => {
-  return await commitTrait(trait, participantId)
-})])
+  return [...traits.map(async (trait) => {
+    return await commitTrait(trait, participantId)
+  })]
+  // return await Promise.all([...traits.map(async (trait) => {
+  //   console.log(trait)
+  //   return await commitTrait(trait, participantId)
+  // })])
 }
 
 async function commitMatches(matches) {
@@ -291,9 +309,10 @@ async function commitMatches(matches) {
         set_core_name: "INTO THE ARCANE",
         createdAt: match.game_datetime
       })
-      console.log(await newMatch)
+      // console.log(await newMatch)
+      let newParticipant
       for (const matchParticipant of match.participants) {
-        const newParticipant = await participant.create({
+        newParticipant = await participant.create({
           goldLeft: matchParticipant.gold_left,
           lastRound: matchParticipant.last_round,
           level: matchParticipant.level,
@@ -303,9 +322,13 @@ async function commitMatches(matches) {
           summonerId: (matchParticipant.riotIdGameName).toLowerCase(),
         })
 
-        await commitParticipantUnits(matchParticipant.units, matchParticipant.id)
+        const unitsCommit = await commitParticipantUnits(matchParticipant.units, await newParticipant.id)
 
-        await commitParticipantTraits(matchParticipant.traits, matchParticipant.id)
+         const traitsCommit = await commitParticipantTraits(matchParticipant.traits, await newParticipant.id)
+         console.log({
+          unitsCommit,
+          traitsCommit
+         })
 
         const newMP = await MatchParticipants.create({
           matchId: match.id,

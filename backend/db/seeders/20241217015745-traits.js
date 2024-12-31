@@ -12,11 +12,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const unique = ["TFT13_HighRoller", "TFT13_JunkerKing", "TFT13_Teamup_Geniuses", "TFT13_Teamup_UnlikelyDuo"];
+    const unique = ["TFT13_HighRoller", "TFT13_JunkerKing", "TFT13_Teamup_Geniuses", "TFT13_Teamup_UnlikelyDuo", "tft13_machineherald", "tft13_missmagetrait", "tft13_bloodhunter", "tft13_teamup_reunion"];
     const twoPoint = ["TFT13_Ambassador", "TFT13_FormSwapper"];
-    const threePoint = ["TFT13_Hoverboard", "TFT13_Watcher", "TFT13_Hextech", "TFT13_Sniper", "TFT13_Titan", "TFT13_Bruiser", "TFT13_Martialist", "TFT13_Experiment", "TFT13_Infused", "TFT13_Challenger"];
+    const threePoint = ["TFT13_Hoverboard", "TFT13_Watcher", "TFT13_Hextech", "TFT13_Sniper", "TFT13_Titan", "TFT13_Bruiser", "TFT13_Martialist", "TFT13_Experiment", "TFT13_Infused", "TFT13_Challenger", "TFT13_Family"];
     const fourPoint = ["TFT13_Ambusher", "TFT13_Rebel", "TFT13_Scrap", "TFT13_Academy", "TFT13_Invoker", "TFT13_Family", "TFT13_Pugilist", "TFT13_Warband", "TFT13_Cabal", "TFT13_Sorcerer"];
-    const fivePoint = ["TFT13_Squad"]
+    const fivePoint = ["TFT13_Squad", "tft13_crime"]
 
     const allTraits = [unique, twoPoint, threePoint, fourPoint, fivePoint];
 
@@ -47,7 +47,7 @@ module.exports = {
           }
     
           const tier = {
-            name,
+            name: name.toLocaleLowerCase(),
             tier_total: i + 1,
             tier_current: k + 1,
             style

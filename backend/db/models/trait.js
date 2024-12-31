@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Trait.belongsToMany(models.participant, {
-        through: models.PartipantTrait
+        through: models.ParticipantTrait
       })
     }
   }

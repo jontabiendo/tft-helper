@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   ParticipantTrait.init({
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     participantId: DataTypes.INTEGER,
     traitId: DataTypes.INTEGER

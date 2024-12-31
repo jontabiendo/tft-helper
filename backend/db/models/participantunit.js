@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   ParticipantUnit.init({
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     participantId: DataTypes.INTEGER,
     unitId: DataTypes.INTEGER

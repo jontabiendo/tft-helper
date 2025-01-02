@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Trait.belongsToMany(models.participant, {
-        through: models.ParticipantTrait
+      Trait.belongsToMany(models.Participant, {
+        through: models.ParticipantTrait,
+        foreignKey: "traitId"
       })
     }
   }

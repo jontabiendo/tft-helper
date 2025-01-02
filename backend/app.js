@@ -56,73 +56,69 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/riot', riotRouter);
 
-const { Op } = require('sequelize');
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, participant, Match, MatchParticipants, SummonerMatches } = require('./db/models');
+const { Op, where } = require('sequelize');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Participant, Match, MatchParticipants, SummonerMatches, sequelize, Trait, Unit, ParticipantTrait, ParticipantUnit } = require('./db/models');
 
 async function eagerRankings() {
   const summoner = await Summoner.findOne({
     where: {
       id: 'waters0lid'
     },
-    attributes: ['id', 'updatedAt', 'level'],
-    // include: [
-    //   NormalRanking,
-    //   HyperRollRanking,
-    //   DoubleUpRanking
-    // ]
     include: [
-      { 
+      {
         model: Ranking,
         include: [
           {
-            model: NormalRanking,
+            model: NormalRanking
           },
           {
-            model: DoubleUpRanking,
+            model: DoubleUpRanking
           },
           {
-            model: HyperRollRanking,
+            model: HyperRollRanking
           }
         ]
       },
       {
         model: Match,
+        through: {
+          attributes: []
+        },
         include: [
           {
             model: MatchParticipants,
+            // through: {
+              attributes: ['id'],
+            // },
             include: [
               {
-                model: participant
+                model: Participant,
+                include:[
+                  {
+                    model: Trait,
+                    through: {
+                      attributes: []
+                    }
+                  },
+                  {
+                    model: Unit,
+                    through: {
+                      attributes: []
+                    }
+                  }
+                ]
               }
-            ]
+              ]
           }
         ]
       }
-    //   {
-    //     model: SummonerMatches,
-    //     include: [
-    //       {
-    //         model: Match,
-    //         include: [
-    //           {
-    //             model: MatchParticipants,
-    //             include: [
-    //               {
-    //                 model: participant
-    //               }
-    //             ]
-    //           }
-    //         ]
-    //       }
-    //   ]
-    // }
-  ]
+    ]
   })
-  const obj = summoner.toJSON()
-  console.log("thing: ", await obj.Matches[0])
-  return await summoner
+  let obj = await summoner.toJSON()
+  console.log("thing: ", await obj)
+  // return await summoner
 }
-console.log(eagerRankings())
+eagerRankings()
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

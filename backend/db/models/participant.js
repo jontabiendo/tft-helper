@@ -1,4 +1,6 @@
 'use strict';
+const Trait = require('./trait')
+const Unit = require('./unit')
 const {
   Model
 } = require('sequelize');
@@ -13,13 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Participant.belongsTo(models.MatchParticipants, {
-        foreignKey: 'id'
+        foreignKey: "id"
       })
       Participant.belongsTo(models.Summoner, {
         foreignKey: 'id'
       })
       Participant.belongsToMany(models.Trait, {
-        through: models.ParticipantTrait
+        through: models.ParticipantTrait,
+        foreignKey: "participantId"
       })
       Participant.belongsToMany(models.Unit, {
         through: models.ParticipantUnit
@@ -41,8 +44,20 @@ module.exports = (sequelize, DataTypes) => {
     summonerId: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'participant',
-    timestamps: false
+    modelName: 'Participant',
+    timestamps: false,
+    scopes: {
+      default: {
+        include: [
+          { 
+            model: Trait
+          },
+          {
+            model: Unit
+          }
+        ]
+      }
+    }
   });
   return Participant;
 };

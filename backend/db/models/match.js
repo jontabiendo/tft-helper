@@ -12,9 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Match.hasOne(models.MatchParticipants, {
-        foreignKey: 'matchId'
+      Match.hasMany(models.MatchParticipants, {
+        foreignKey: "matchId"
       })
+    
       // Match.hasMany(models.SummonerMatches, {
       //   foreignKey: 'matchId',
       // })

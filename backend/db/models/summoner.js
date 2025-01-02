@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Summoner.hasOne(models.Ranking, {
         foreignKey: 'summonerId'
       })
-      Summoner.hasMany(models.participant, {
+      Summoner.hasMany(models.Participant, {
         foreignKey: 'summonerId',
       })
       // Summoner.hasMany(models.SummonerMatches, {

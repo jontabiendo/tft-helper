@@ -2,7 +2,7 @@ const traits = require('./traitLinks')
 const units = require("./unitLinks")
 const { Op } = require('sequelize')
 
-const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, participant, SummonerMatches, Unit, Trait, ParticipantUnit, ParticipantTrait } = require('../../db/models');
+const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, Participant, SummonerMatches, Unit, Trait, ParticipantUnit, ParticipantTrait } = require('../../db/models');
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
@@ -282,13 +282,13 @@ async function commitTrait(trait, participantId) {
 }
 
 async function commitParticipantTraits(traits, participantId) {
-  return [...traits.map(async (trait) => {
-    return await commitTrait(trait, participantId)
-  })]
-  // return await Promise.all([...traits.map(async (trait) => {
-  //   console.log(trait)
+  // return [...traits.map(async (trait) => {
   //   return await commitTrait(trait, participantId)
-  // })])
+  // })]
+  return await Promise.all([...traits.map(async (trait) => {
+    console.log(trait)
+    return await commitTrait(trait, participantId)
+  })])
 }
 
 async function commitMatches(matches) {
@@ -312,7 +312,7 @@ async function commitMatches(matches) {
       // console.log(await newMatch)
       let newParticipant
       for (const matchParticipant of match.participants) {
-        newParticipant = await participant.create({
+        newParticipant = await Participant.create({
           goldLeft: matchParticipant.gold_left,
           lastRound: matchParticipant.last_round,
           level: matchParticipant.level,
@@ -324,15 +324,11 @@ async function commitMatches(matches) {
 
         const unitsCommit = await commitParticipantUnits(matchParticipant.units, await newParticipant.id)
 
-         const traitsCommit = await commitParticipantTraits(matchParticipant.traits, await newParticipant.id)
-         console.log({
-          unitsCommit,
-          traitsCommit
-         })
+        const traitsCommit = await commitParticipantTraits(matchParticipant.traits, await newParticipant.id)
 
         const newMP = await MatchParticipants.create({
           matchId: match.id,
-          participant: await newParticipant.id,
+          participantId: await newParticipant.id,
           createdAt: new Date(match.game_datetime)
         })
 

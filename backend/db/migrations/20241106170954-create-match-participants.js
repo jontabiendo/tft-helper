@@ -12,7 +12,7 @@ module.exports = {
       matchId: {
         type: Sequelize.STRING
       },
-      participant: {
+      participantId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -12,16 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       MatchParticipants.belongsTo(models.Match, {
-        foreignKey: 'participant'
+        foreignKey: 'matchId'
       })
-      MatchParticipants.hasMany(models.participant, {
-        foreignKey: 'id'
+      MatchParticipants.hasOne(models.Participant, {
+        foreignKey: "id"
       })
     }
   }
   MatchParticipants.init({
     matchId: DataTypes.STRING,
-    participant: DataTypes.INTEGER,
+    participantId: DataTypes.INTEGER,
     createdAt: DataTypes.DATE
   }, {
     sequelize,

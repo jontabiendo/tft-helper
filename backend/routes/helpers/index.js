@@ -142,14 +142,14 @@ async function normalizeDatabaseMatchData(matchData) {
 async function dbCommitStarter(data) {
   console.log('Starting commit to db...')
   // console.log(data.summoner.rankings)
-  console.log(data)
+  // console.log(data)
 
   let summoner = await Summoner.findOne({
     where: {
       id: data.summoner.name.toLowerCase()
     }
   })
-  console.log(summoner)
+  // console.log(summoner)
   if (summoner) {
     summoner.level = data.summoner.summonerLevel,
     summoner.updatedAt = new Date(data.summoner.revisionDate)
@@ -225,7 +225,7 @@ async function dbCommitStarter(data) {
 }
 
 async function commitUnit(unit, participantId) {
-  console.log(unit)
+  // console.log(unit)
   if (unit.character_id.toLowerCase() === "tft13_jaycesummon") {
     return
   }
@@ -274,7 +274,7 @@ async function commitTrait(trait, participantId) {
 
   await newTraitEntry.save()
 
-  console.log(newTraitEntry)
+  // console.log(newTraitEntry)
 
   // console.log("new Unit: ", await newU)
 
@@ -286,7 +286,7 @@ async function commitParticipantTraits(traits, participantId) {
   //   return await commitTrait(trait, participantId)
   // })]
   return await Promise.all([...traits.map(async (trait) => {
-    console.log(trait)
+    // console.log(trait)
     return await commitTrait(trait, participantId)
   })])
 }
@@ -342,10 +342,87 @@ async function commitMatches(matches) {
   }
 }
 
+async function normalizeDbDataForFrontend(data) {
+  const res = {
+    summoner: {
+      name: data.id,
+      summonerLevel: data.level,
+      revisionDate: new Date(data.updatedAt),
+      rankings: {
+        RANKED_TFT: data.Ranking.NormalRanking ? data.Ranking.NormalRanking : null,
+        RANKED_TFT_DOUBLE_UP: data.Ranking.DoubleUpRanking ? data.Ranking.DoubleUpRanking : null,
+        RANKTED_TFT_TURBO: data.Ranking.HyperRollRanking ? data.Ranking.HyperRollRanking : null
+      }
+    },
+    matches: []
+  }
+  console.log(data)
+
+  for (const match of data.Matches) {
+    console.log("match: ", match)
+    const newMatch = {
+      game_type: match.game_type,
+      tft_set: match.tft_set
+    }
+
+    const relevantData = match.MatchParticipants.find(p => {
+      return p.Participant.summonerId.toLowerCase() === data.id.toLowerCase()
+    })
+
+    console.log("data: ", relevantData, data.id)
+
+    for (const part of match.MatchParticipants) {
+      const newPart = {
+        gold_left: part.goldLeft,
+        last_round: part.lastRound,
+        level: part.level,
+        placement: part.placement,
+        players_eliminated: part.playersEliminated,
+        riotIdGameName: part.summonerId,
+        riotIdTagline: 'NA1',
+        total_damage_to_players: part.totalDamageToPlayers,
+        traits: [],
+        units: []
+      }
+      // console.log(part)
+      for (const trait of part.Participant.Traits) {
+        const newTrait = {
+          name: trait.name,
+          style: trait.style,
+          tier_current: trait.tier_current,
+          tier_total: trait.tier_total,
+          link: traits[trait.name.toLowerCase()]
+        }
+  
+        // newMatch.traits.push(newTrait)
+      }
+  
+      for (const unit of part.Participant.Units) {
+        const newUnit = {
+          character_id: unit.name,
+          name:"",
+          rarity: unit.rarity,
+          tier: unit.tier,
+          link: units[unit.name]
+        }
+
+        // newMatch.units.push(newUnit)
+      }
+
+    }
+    res.matches.push(newMatch)
+
+  }
+  // console.log("RES HERE: ", res)
+
+  return res
+}
+
 module.exports = {
   normalizeMatchDataById,
   normalizeRankedData,
   normalizeDatabaseMatchData,
   dbCommitStarter,
-  commitMatches
+  commitMatches,
+  normalizeDbDataForFrontend
 }

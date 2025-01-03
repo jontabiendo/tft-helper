@@ -47,7 +47,9 @@ const traits = {
   "TFT13_Challenger": "https://cdn.lolchess.gg/upload/images/traits/Quickstriker_black_1731045806-QuickStriker.svg",
   "TFT13_Crime": "https://cdn.lolchess.gg/upload/images/traits/ChemBaron_black_1731045675-ChemBaron.svg",
   "TFT13_MissMageTrait": "https://cdn.lolchess.gg/upload/images/traits/BanishedMage_black_1732695186-banishedmage.svg",
-  "TFT13_MachineHerald": "https://cdn.lolchess.gg/upload/images/traits/MachineHerald_black_1732695097-machineherald.svg"
+  "TFT13_MachineHerald": "https://cdn.lolchess.gg/upload/images/traits/MachineHerald_black_1732695097-machineherald.svg",
+  "tft13_teamup_sisters": "https://cdn.lolchess.gg/upload/images/traits/Sisters_black_1731912487-Sisters.svg",
+  "tft13_teamup_menaces": "https://cdn.lolchess.gg/upload/images/traits/Menaces_black_1731912471-Menaces.svg"
 }
 
 module.exports = {

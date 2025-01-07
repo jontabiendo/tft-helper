@@ -38,7 +38,7 @@ function MatchTile({match}){
             <div className={`unit-${unit.rarity}-tile-div`}>
               <p>{new Array(unit.tier).fill(<i class="fa-solid fa-star"></i>)}</p>
               <img src={unit.link} />
-              <span>{new Array(unit.itemNames.length).fill(<i class="fa-solid fa-square"></i>)}</span>
+              {/* <span>{new Array(unit.itemNames.length).fill(<i class="fa-solid fa-square"></i>)}</span> */}
             </div>
           ))}
         </div>

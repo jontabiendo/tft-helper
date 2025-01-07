@@ -52,6 +52,12 @@ const traits = {
   "tft13_teamup_menaces": "https://cdn.lolchess.gg/upload/images/traits/Menaces_black_1731912471-Menaces.svg"
 }
 
+let newTraits = {}
+
+Object.entries(traits).map(([key, value]) => {
+  newTraits[key.toLowerCase()] =  value
+})
+
 module.exports = {
-  traits
+  newTraits
 }

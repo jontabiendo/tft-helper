@@ -1,12 +1,144 @@
-const traits = require('./traitLinks')
-const units = require("./unitLinks")
+const { newTraits : traitLinks} = require('./traitLinks')
+const { newUnits : unitLinks} = require("./unitLinks")
 const { Op } = require('sequelize')
 
 const { Summoner, NormalRanking, Ranking, DoubleUpRanking, HyperRollRanking, Match, MatchParticipants, Participant, SummonerMatches, Unit, Trait, ParticipantUnit, ParticipantTrait } = require('../../db/models');
 
+async function getSummonerFromDb(name) {
+  const prelim = await Summoner.findOne({
+    where: {
+      id: name
+    },
+    include: [
+      {
+        model: Ranking,
+        include: [
+          {
+            model: NormalRanking
+          },
+          {
+            model: DoubleUpRanking
+          },
+          {
+            model: HyperRollRanking
+          }
+        ]
+      },
+      {
+        model: Match,
+        through: {
+          attributes: []
+        },
+        include: [
+          {
+            model: MatchParticipants,
+            // through: {
+              attributes: ['id'],
+            // },
+            include: [
+              {
+                model: Participant,
+                include:[
+                  {
+                    model: Trait,
+                    through: {
+                      attributes: []
+                    }
+                  },
+                  {
+                    model: Unit,
+                    through: {
+                      attributes: []
+                    }
+                  }
+                ]
+              }
+              ]
+          }
+        ]
+      }
+    ]
+  })
+
+  return prelim    
+}
+
+async function getSummonerFromRGAPI(name) {
+  let summoner;
+  
+  try {
+    summoner = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${name}/NA1?api_key=${process.env.RIOT_API_KEY}`)
+    
+  } catch(e) {
+    console.log('here', e)
+    res.status(404).send("Summoner not found")
+    return
+  }
+
+  
+  const summonerResolved = await summoner.data;
+
+  const summonerInfo = await axiosNA1.get(`/summoner/v1/summoners/by-puuid/${summonerResolved.puuid}?api_key=${process.env.RIOT_API_KEY}`).then((e) => {
+    return e.data
+  }
+  );
+  // console.log( summonerInfo)
+
+  summonerInfo.name = name
+
+  const count = 5;
+  const rawMatchList = Array(count);
+  const matches = await axiosAmericas.get(`/tft/match/v1/matches/by-puuid/${summonerResolved.puuid}/ids?count=${count}&api_key=${process.env.RIOT_API_KEY}`)
+  .then(async e => {
+    const fullInfoList = await Promise.all(
+      [...e.data.map(async (match, idx) => {
+        const res = await axiosAmericas.get(`/tft/match/v1/matches/${match}?api_key=${process.env.RIOT_API_KEY}`)
+        
+        relevantInfo = normalizeMatchDataById(res.data.info.participants, summonerResolved.puuid, res.data.info.queueId)
+        // idx === 0 ? console.log(relevantInfo) : null
+        
+        rawMatchList[idx] = (res.data)
+
+        return relevantInfo
+    }), (async () => {
+      const rankedInfo = await axiosNA1.get(`/league/v1/entries/by-summoner/${summonerInfo.id}?api_key=${process.env.RIOT_API_KEY}`)
+
+      summonerInfo.rankings = normalizeRankedData(rankedInfo.data)
+
+      return summonerInfo.rankings
+    })()
+  ])
+
+  // console.log(await matches)
+
+  fullInfoList.pop()
+    return fullInfoList
+  })
+
+  const data = {
+    time: (Date.now() - start)/1000 + " seconds",
+    summoner: summonerInfo,
+    matches: matches
+  }
+  // console.log(data)
+  console.log("Response time: ", data.time)
+  res.status(200).send(data)
+
+  const backendTime = Date.now()
+
+  const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
+
+  // console.log(data.summoner)
+  dbCommitStarter(data).then(() => {
+    commitMatches(dbData)
+  })
+  
+  console.log('Total time: ', (Date.now() - start)/1000 + " seconds")
+}
+
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
-    trait.link = traits.traits[`${trait.name}`]
+    trait.link = traitLinks[`${trait.name}`]
   });
 
   return traitsList
@@ -14,7 +146,7 @@ function assignTraitLinks(traitsList) {
 
 function assignUnitLinks(unitList) {
   unitList.map(unit => {
-    unit.link = units.units[`${unit.character_id}`]
+    unit.link = unitLinks[`${unit.character_id}`]
   })
 
   return unitList
@@ -259,6 +391,7 @@ async function commitParticipantUnits(units, participantId) {
 }
 
 async function commitTrait(trait, participantId) {
+  console.log(trait)
   const traitEntry = await Trait.findOne({
     where: {
       name: trait.name.toLowerCase(),
@@ -356,64 +489,61 @@ async function normalizeDbDataForFrontend(data) {
     },
     matches: []
   }
-  console.log(data)
+  // console.log(data)
 
   for (const match of data.Matches) {
-    console.log("match: ", match)
+    // console.log("match: ", match)
     const newMatch = {
       game_type: match.game_type,
       tft_set: match.tft_set
     }
 
+  
     const relevantData = match.MatchParticipants.find(p => {
       return p.Participant.summonerId.toLowerCase() === data.id.toLowerCase()
-    })
+    }).Participant
 
-    console.log("data: ", relevantData, data.id)
+    // console.log("data: ", relevantData)
 
-    for (const part of match.MatchParticipants) {
-      const newPart = {
-        gold_left: part.goldLeft,
-        last_round: part.lastRound,
-        level: part.level,
-        placement: part.placement,
-        players_eliminated: part.playersEliminated,
-        riotIdGameName: part.summonerId,
-        riotIdTagline: 'NA1',
-        total_damage_to_players: part.totalDamageToPlayers,
-        traits: [],
-        units: []
-      }
-      // console.log(part)
-      for (const trait of part.Participant.Traits) {
-        const newTrait = {
-          name: trait.name,
-          style: trait.style,
-          tier_current: trait.tier_current,
-          tier_total: trait.tier_total,
-          link: traits[trait.name.toLowerCase()]
-        }
-  
-        // newMatch.traits.push(newTrait)
-      }
-  
-      for (const unit of part.Participant.Units) {
-        const newUnit = {
-          character_id: unit.name,
-          name:"",
-          rarity: unit.rarity,
-          tier: unit.tier,
-          link: units[unit.name]
-        }
+    newMatch.gold_left = relevantData.goldLeft
+    newMatch.last_round = relevantData.lastRound
+    newMatch.level = relevantData.level
+    newMatch.placement = relevantData.placement
+    newMatch.players_eliminated = relevantData.playersEliminated
+    newMatch.traits = []
+    newMatch.units = []
 
-        // newMatch.units.push(newUnit)
+    // console.log(part)
+    for (const trait of relevantData.Traits) {
+      const newTrait = {
+        name: trait.name,
+        style: trait.style,
+        tier_current: trait.tier_current,
+        tier_total: trait.tier_total,
+        link: traitLinks[trait.name.toLowerCase()]
       }
 
+      newMatch.traits.push(newTrait)
     }
+
+    for (const unit of relevantData.Units) {
+      console.log(unit)
+      const newUnit = {
+        character_id: unit.name,
+        name:"",
+        rarity: unit.rarity,
+        tier: unit.tier,
+        link: unitLinks[unit.name.toLowerCase()]
+      }
+
+      newMatch.units.push(newUnit)
+    }
+
+    
     res.matches.push(newMatch)
 
   }
-  // console.log("RES HERE: ", res)
+  console.log("RES HERE: ", res.matches[0])
 
   return res
 }
@@ -424,5 +554,7 @@ module.exports = {
   normalizeDatabaseMatchData,
   dbCommitStarter,
   commitMatches,
-  normalizeDbDataForFrontend
+  normalizeDbDataForFrontend,
+  getSummonerFromDb,
+  getSummonerFromRGAPI
 }

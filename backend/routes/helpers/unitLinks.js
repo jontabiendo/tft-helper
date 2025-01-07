@@ -4,7 +4,7 @@ const units = {
   "TFT13_Jinx": "https://cdn.lolchess.gg/upload/images/champions/Jinx_1731058201-Jinx.png",
   "tft13_jinx": "https://cdn.lolchess.gg/upload/images/champions/Jinx_1731058201-Jinx.png",
   "TFT13_Garen": "https://cdn.lolchess.gg/upload/images/champions/Garen_1731058172-Garen.png",
-  "TFT13_Vi": "	https://cdn.lolchess.gg/upload/images/champions/Vi_1731058374-Vi.png",
+  "TFT13_Vi": "https://cdn.lolchess.gg/upload/images/champions/Vi_1731058374-Vi.png",
   "TFT13_Prime": "https://cdn.lolchess.gg/upload/images/champions/Vander_1731058270-Vander.jpg",
   "TFT13_Draven": "https://cdn.lolchess.gg/upload/images/champions/Draven_1731058141-Draven.png",
   "TFT13_Blue": "https://cdn.lolchess.gg/upload/images/champions/Powder_1731058254-Powder.jpg",
@@ -68,7 +68,12 @@ const units = {
   "TFT13_Viktor": "https://cdn.lolchess.gg/upload/images/champions/Viktor_1732679470-tft13_viktor_square.tft_set13_evolved.png",
   "TFT13_BloodHunter": "https://cdn.lolchess.gg/upload/images/traits/BloodHunter_black_1732695201-bloodhunter.svg"
 }
+let newUnits = {}
+
+Object.entries(units).map(([k, v]) => {
+  newUnits[k.toLowerCase()] = v
+})
 
 module.exports = {
-  units
+  newUnits
 }

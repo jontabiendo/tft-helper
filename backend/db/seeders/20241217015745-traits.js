@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const unique = ["TFT13_HighRoller", "TFT13_JunkerKing", "TFT13_Teamup_Geniuses", "TFT13_Teamup_UnlikelyDuo", "tft13_machineherald", "tft13_missmagetrait", "tft13_bloodhunter", "tft13_teamup_reunion"];
+    const unique = ["TFT13_HighRoller", "TFT13_JunkerKing", "TFT13_Teamup_Geniuses", "TFT13_Teamup_UnlikelyDuo", "tft13_machineherald", "tft13_missmagetrait", "tft13_bloodhunter", "tft13_teamup_reunion", "tft13_teamup_sisters", "tft13_teamup_mentorship", "tft13_teamup_menaces"];
     const twoPoint = ["TFT13_Ambassador", "TFT13_FormSwapper"];
     const threePoint = ["TFT13_Hoverboard", "TFT13_Watcher", "TFT13_Hextech", "TFT13_Sniper", "TFT13_Titan", "TFT13_Bruiser", "TFT13_Martialist", "TFT13_Experiment", "TFT13_Infused", "TFT13_Challenger", "TFT13_Family"];
     const fourPoint = ["TFT13_Ambusher", "TFT13_Rebel", "TFT13_Scrap", "TFT13_Academy", "TFT13_Invoker", "TFT13_Family", "TFT13_Pugilist", "TFT13_Warband", "TFT13_Cabal", "TFT13_Sorcerer"];

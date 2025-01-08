@@ -1,3 +1,4 @@
+const axios = require('axios')
 const { newTraits : traitLinks} = require('./traitLinks')
 const { newUnits : unitLinks} = require("./unitLinks")
 const { Op } = require('sequelize')
@@ -29,6 +30,9 @@ async function getSummonerFromDb(name) {
         through: {
           attributes: []
         },
+        order: [
+          ['id', 'DESC']
+        ],
         include: [
           {
             model: MatchParticipants,
@@ -59,9 +63,20 @@ async function getSummonerFromDb(name) {
       }
     ]
   })
+  // console.log(await prelim.toJSON().Matches)
 
   return prelim    
 }
+
+const axiosAmericas = axios.create({
+  baseURL: "https://americas.api.riotgames.com",
+  header: { "Access-Control-Allow_Origin" : "*"}
+})
+
+const axiosNA1 = axios.create({
+  baseURL: "https://na1.api.riotgames.com/tft",
+  header: { "Access-Control-Allow_Origin" : "*"}
+})
 
 async function getSummonerFromRGAPI(name) {
   let summoner;
@@ -70,9 +85,7 @@ async function getSummonerFromRGAPI(name) {
     summoner = await axiosAmericas.get(`/riot/account/v1/accounts/by-riot-id/${name}/NA1?api_key=${process.env.RIOT_API_KEY}`)
     
   } catch(e) {
-    console.log('here', e)
-    res.status(404).send("Summoner not found")
-    return
+    throw new Error("Summoner not found")
   }
 
   
@@ -116,29 +129,18 @@ async function getSummonerFromRGAPI(name) {
   })
 
   const data = {
-    time: (Date.now() - start)/1000 + " seconds",
     summoner: summonerInfo,
     matches: matches
   }
-  // console.log(data)
-  console.log("Response time: ", data.time)
-  res.status(200).send(data)
-
-  const backendTime = Date.now()
-
-  const dbData = await Promise.all(rawMatchList.map( async (match) =>  normalizeDatabaseMatchData(match)))
-
-  // console.log(data.summoner)
-  dbCommitStarter(data).then(() => {
-    commitMatches(dbData)
-  })
-  
-  console.log('Total time: ', (Date.now() - start)/1000 + " seconds")
+  return {
+    data,
+    rawMatchList
+  }
 }
 
 function assignTraitLinks(traitsList) {
   traitsList.forEach(trait => {
-    trait.link = traitLinks[`${trait.name}`]
+    trait.link = traitLinks[`${trait.name.toLowerCase()}`]
   });
 
   return traitsList
@@ -146,7 +148,7 @@ function assignTraitLinks(traitsList) {
 
 function assignUnitLinks(unitList) {
   unitList.map(unit => {
-    unit.link = unitLinks[`${unit.character_id}`]
+    unit.link = unitLinks[`${unit.character_id.toLowerCase()}`]
   })
 
   return unitList
@@ -320,7 +322,7 @@ async function dbCommitStarter(data) {
     summoner = await Summoner.create({
       id: data.summoner.name.toLowerCase(),
       level: data.summoner.summonerLevel,
-      updatedAt: new Date(data.summoner.revisionDate)
+      updatedAt: Date.now()
     })
 
     const ranking = await Ranking.create({
@@ -391,7 +393,6 @@ async function commitParticipantUnits(units, participantId) {
 }
 
 async function commitTrait(trait, participantId) {
-  console.log(trait)
   const traitEntry = await Trait.findOne({
     where: {
       name: trait.name.toLowerCase(),
@@ -399,6 +400,7 @@ async function commitTrait(trait, participantId) {
       tier_current: trait.tier_current,
     }
   })
+  // console.log(trait, traitEntry)
 
   const newTraitEntry = await ParticipantTrait.create({
     participantId: participantId,
@@ -484,7 +486,7 @@ async function normalizeDbDataForFrontend(data) {
       rankings: {
         RANKED_TFT: data.Ranking.NormalRanking ? data.Ranking.NormalRanking : null,
         RANKED_TFT_DOUBLE_UP: data.Ranking.DoubleUpRanking ? data.Ranking.DoubleUpRanking : null,
-        RANKTED_TFT_TURBO: data.Ranking.HyperRollRanking ? data.Ranking.HyperRollRanking : null
+        RANKED_TFT_TURBO: data.Ranking.HyperRollRanking ? data.Ranking.HyperRollRanking : null
       }
     },
     matches: []
@@ -492,29 +494,28 @@ async function normalizeDbDataForFrontend(data) {
   // console.log(data)
 
   for (const match of data.Matches) {
-    // console.log("match: ", match)
+    console.log("matchParticipants: ", match.MatchParticipants)
     const newMatch = {
       game_type: match.game_type,
       tft_set: match.tft_set
     }
+    // console.log(match.MatchParticipants, data.id)
 
-  
     const relevantData = match.MatchParticipants.find(p => {
       return p.Participant.summonerId.toLowerCase() === data.id.toLowerCase()
-    }).Participant
+    })
+    console.log("data: ", relevantData)
 
-    // console.log("data: ", relevantData)
-
-    newMatch.gold_left = relevantData.goldLeft
-    newMatch.last_round = relevantData.lastRound
-    newMatch.level = relevantData.level
-    newMatch.placement = relevantData.placement
-    newMatch.players_eliminated = relevantData.playersEliminated
+    newMatch.gold_left = relevantData.Participant.goldLeft
+    newMatch.last_round = relevantData.Participant.lastRound
+    newMatch.level = relevantData.Participant.level
+    newMatch.placement = relevantData.Participant.placement
+    newMatch.players_eliminated = relevantData.Participant.playersEliminated
     newMatch.traits = []
     newMatch.units = []
 
     // console.log(part)
-    for (const trait of relevantData.Traits) {
+    for (const trait of relevantData.Participant.Traits) {
       const newTrait = {
         name: trait.name,
         style: trait.style,
@@ -526,8 +527,8 @@ async function normalizeDbDataForFrontend(data) {
       newMatch.traits.push(newTrait)
     }
 
-    for (const unit of relevantData.Units) {
-      console.log(unit)
+    for (const unit of relevantData.Participant.Units) {
+      // console.log(unit)
       const newUnit = {
         character_id: unit.name,
         name:"",
@@ -543,7 +544,7 @@ async function normalizeDbDataForFrontend(data) {
     res.matches.push(newMatch)
 
   }
-  console.log("RES HERE: ", res.matches[0])
+  // console.log("RES HERE: ", res.matches[0])
 
   return res
 }

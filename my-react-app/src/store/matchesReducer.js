@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const GET_MATCHES = 'GET_MATCHES';
 const REVERSE_MATCHES = 'REVERSE_MATCHES';
+const UPDATE_SUMMONER = "UPDATE_SUMMONER";
 
 // function getMatchesAction(matches) {
 //   return {
@@ -53,6 +54,23 @@ export const getMatches = createAsyncThunk(
   async (name, thunkApi) => {
     const res = await fetchMatches(name)
     return res
+  }
+)
+
+export const updateSummoner = createAsyncThunk(
+  UPDATE_SUMMONER,
+  async (name, thunkApi) => {
+    console.log('fetching update summoner')
+    const res = await fetch(`http://localhost:3000/riot/update/${name}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const thing = await res.json();
+    console.log("summoner update: ", thing);
+    return thing
   }
 )
 

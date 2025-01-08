@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../../context/modal";
 import OpenModalButton from "../OpenModalButton";
 import Loading from "../LoadingModal";
-import { getMatches } from "../../store/matchesReducer";
+import { getMatches, updateSummoner } from "../../store/matchesReducer";
 
 function SummonerHeader({summoner}) {
   const dispatch = useDispatch();
@@ -32,10 +32,11 @@ function SummonerHeader({summoner}) {
       break
   }
 
-  async function updateSummoner() {
+  async function dispatchUpdateSummoner() {
     
     try {
-      const res = await dispatch(getMatches(summoner.name))
+      console.log('dispatching update summoner...')
+      const res = await dispatch(updateSummoner(summoner.name))
         .then(e => {
         dispatch(getMatchesAction(e.payload.matches))
         e.payload.summoner.revisionDate = new Date(e.payload.summoner.revisionDate).toDateString()
@@ -56,7 +57,7 @@ function SummonerHeader({summoner}) {
       <div id="summoner-meta-div">
         <p className="light-p">Level {summoner.summonerLevel}</p>
         <h2 id='summoner-name'>{summoner.name}</h2>
-        <OpenModalButton modalComponent={Loading} buttonText="Update" buttonClass="accent-button-a" onButtonClick={updateSummoner}/>
+        <OpenModalButton modalComponent={Loading} buttonText="Update" buttonClass="accent-button-a" onButtonClick={dispatchUpdateSummoner}/>
         <button className="accent-button-b" onClick={() => console.log('In progress...')}>Set 11 Report</button>
         <p className="light-p">Last Updated: {revisionTime}</p>
       </div>

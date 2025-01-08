@@ -2,21 +2,25 @@ import React from "react";
 
 function MatchTile({match}){
   // console.log(match)
-  let setName;
-  switch (match.queueId) {
-    case 6110:
-      setName = "5.5 Revival"
+  let gameType;
+  switch (match.game_type) {
+    case "pve":
+      gameType = "Tocker's Trials"
       break;
+    case "turbo":
+      gameType = "Hyper Roll"
+      break
   
     default:
-      setName = "Normal"
+      gameType = "Normal"
       break;
   }
   return (
     <div className="match-tile">
       <div className="match-player-metadata-div">
         <h6>#{match.placement}</h6>
-        <p>Set {setName}</p>
+        <p>Set {match.tft_set}</p>
+        <p>{gameType}</p>
       </div>
       <div className="match-player-boarddata-div">
         <p>Level: {match.level}</p>

@@ -4,10 +4,11 @@ import { useModal } from "../../../context/modal";
 import OpenModalButton from "../OpenModalButton";
 import Loading from "../LoadingModal";
 import { getMatches, updateSummoner } from "../../store/matchesReducer";
+import { setSummoner } from "../../store/summonerReducer";
 
-function SummonerHeader({summoner}) {
+function SummonerHeader() {
   const dispatch = useDispatch();
-  summoner = summoner
+  const summoner = useSelector((state) => state.summoner.summoner)
 
   const { closeModal } = useModal();
   // summoner = summoner.summoner

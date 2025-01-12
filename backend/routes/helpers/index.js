@@ -30,9 +30,9 @@ async function getSummonerFromDb(name) {
         through: {
           attributes: []
         },
-        order: [
-          ['id', 'DESC']
-        ],
+        // order: [
+        //   ['id', 'ASC']
+        // ],
         include: [
           {
             model: MatchParticipants,

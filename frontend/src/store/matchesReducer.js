@@ -45,7 +45,7 @@ async function fetchMatches(name) {
     }
   })
   const thing = await res.json()
-  console.log("res: ", thing)
+  // console.log("res: ", thing)
   return thing
 }
 
@@ -60,7 +60,7 @@ export const getMatches = createAsyncThunk(
 export const updateSummoner = createAsyncThunk(
   UPDATE_SUMMONER,
   async (name, thunkApi) => {
-    console.log('fetching update summoner')
+    // console.log('fetching update summoner')
     const res = await fetch(`http://localhost:3000/riot/update/${name}`, {
       method: "GET",
       headers: {
@@ -69,7 +69,7 @@ export const updateSummoner = createAsyncThunk(
     });
 
     const thing = await res.json();
-    console.log("summoner update: ", thing);
+    // console.log("summoner update: ", thing);
     return thing
   }
 )

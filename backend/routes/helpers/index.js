@@ -274,7 +274,7 @@ async function normalizeDatabaseMatchData(matchData) {
 }
 
 async function dbCommitStarter(data) {
-  console.log('Starting commit to db...')
+  // console.log('Starting commit to db...')
   // console.log(data.summoner.rankings)
   // console.log(data)
 
@@ -427,7 +427,7 @@ async function commitParticipantTraits(traits, participantId) {
 }
 
 async function commitMatches(matches) {
-  console.log("STARTING MATCHES COMMIT")
+  // console.log("STARTING MATCHES COMMIT")
   for (const match of matches) {
     let dbMatch = await Match.findOne({
       where: {
@@ -494,7 +494,7 @@ async function normalizeDbDataForFrontend(data) {
   // console.log(data)
 
   for (const match of data.Matches) {
-    console.log("matchParticipants: ", match.MatchParticipants)
+    // console.log("matchParticipants: ", match.MatchParticipants)
     const newMatch = {
       game_type: match.game_type,
       tft_set: match.tft_set
@@ -504,7 +504,7 @@ async function normalizeDbDataForFrontend(data) {
     const relevantData = match.MatchParticipants.find(p => {
       return p.Participant.summonerId.toLowerCase() === data.id.toLowerCase()
     })
-    console.log("data: ", relevantData)
+    // console.log("data: ", relevantData)
 
     newMatch.gold_left = relevantData.Participant.goldLeft
     newMatch.last_round = relevantData.Participant.lastRound

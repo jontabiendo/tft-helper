@@ -39,13 +39,13 @@ router.get('/:summoner', async function(req, res, next) {
     commitMatches(dbData)
   })
   
-  console.log('Backend time: ', (Date.now() - backendTime)/1000 + " seconds")
+  // console.log('Backend time: ', (Date.now() - backendTime)/1000 + " seconds")
 
   return 
 })
 
 router.get('/update/:summoner', async function(req, res, next) {
-  console.log('requesting update summoner')
+  // console.log('requesting update summoner')
   try {
     const summoner = await getSummonerFromRGAPI(req.params.summoner)
     // console.log(summoner)
@@ -61,11 +61,11 @@ router.get('/update/:summoner', async function(req, res, next) {
       commitMatches(dbData)
     })
     
-    console.log('Backend time: ', (Date.now() - backendTime)/1000 + " seconds")
+    // console.log('Backend time: ', (Date.now() - backendTime)/1000 + " seconds")
     
     
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).send("Summoner not found")
   }
 

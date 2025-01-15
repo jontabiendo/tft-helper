@@ -11,9 +11,9 @@
   },
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",
-    "install": "npm install --prefix frontend --production=false && npm --prefix backend install backend && npm --prefix frontend install frontend",
+    "install": "npm install --prefix my-react-app && npm --prefix backend install backend && npm --prefix my-react-app install my-react-app",
     "dev:backend": "npm install --prefix backend start",
-    "dev:frontend": "npm install --prefix frontend start",
+    "dev:frontend": "npm install --prefix my-react-app start",
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
